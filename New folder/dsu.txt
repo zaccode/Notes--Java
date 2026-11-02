@@ -1,0 +1,937 @@
+# 📖 **The Ultimate Graph Algorithms Handbook (Pattern-Based Edition)**
+
+## How This Book Works
+
+For **EVERY** topic in graph, I will break it down into **patterns**. Each pattern has:
+- **Theory** (what, why, when, properties, time complexity)
+- **Visual Diagram** (see how it works)
+- **Template Code** (ready to use)
+- **10 Practice Questions** (5 LeetCode + 5 GFG, categorized by pattern)
+
+---
+
+# **PART 1: UNION-FIND (DISJOINT SET UNION)**
+
+## Why DSU Deserves Its Own Deep Dive
+
+DSU is **not just one algorithm** — it's a **family of patterns**. Each pattern solves a different type of problem. If you don't learn the patterns, you'll struggle to recognize when to apply DSU.
+
+---
+
+## 📊 **DSU: Properties & Complexity**
+
+| Property | Value |
+|----------|-------|
+| **Time Complexity (Find)** | O(α(n)) ≈ O(1) with path compression |
+| **Time Complexity (Union)** | O(α(n)) ≈ O(1) with union by rank |
+| **Space Complexity** | O(n) |
+| **Works On** | Undirected Graphs only |
+| **α(n)** | Inverse Ackermann function (≤ 4 for all practical n)  |
+
+### When to Use DSU (The Signals)
+
+| Problem Signal | DSU Pattern |
+|----------------|--------------|
+| "Find connected components" | Pattern 1 |
+| "Merge groups/sets" | Pattern 1 |
+| "Find redundant/extra edge" | Pattern 2 |
+| "Add edges and query connectivity" | Pattern 3 |
+| "Answer queries offline with thresholds" | Pattern 4 |
+| "Lexicographically smallest after swaps" | Pattern 5 |
+| "Graph connectivity with two players" | Pattern 6 |
+| "Union elements by factors/properties" | Pattern 7 |
+| "Satisfy equality/inequality equations" | Pattern 8 |
+| "Find when two nodes become connected" | Pattern 9 |
+| "Track component sizes" | Pattern 10 |
+
+---
+
+## **PATTERN 1: Basic Connectivity & Component Counting**
+
+### 📖 Theory
+The **most fundamental DSU pattern**. You have a graph. You need to:
+- Find how many connected components exist
+- Check if two nodes are in the same component
+- Merge components as edges are added
+
+**Properties:**
+- After all unions, each component has exactly **one root**
+- Number of components = number of nodes with `parent[i] == i`
+- Union operation reduces component count by 1 each time
+
+### 🎨 Visual Diagram
+```
+Initial: 5 isolated nodes
+[0] [1] [2] [3] [4]  → 5 components
+
+Union(0,1):
+[0-1] [2] [3] [4]    → 4 components
+
+Union(2,3):
+[0-1] [2-3] [4]      → 3 components
+
+Union(1,2):
+[0-1-2-3] [4]        → 2 components
+
+Find(0) == Find(3)? Yes (same component)
+```
+
+### 🔧 Template Code
+```java
+class DSU {
+    int[] parent;
+    int[] rank;
+    int components;
+    
+    public DSU(int n) {
+        parent = new int[n];
+        rank = new int[n];
+        components = n;
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+    
+    public int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);  // Path compression
+        }
+        return parent[x];
+    }
+    
+    public boolean union(int x, int y) {
+        int px = find(x), py = find(y);
+        if (px == py) return false;
+        
+        // Union by rank
+        if (rank[px] < rank[py]) {
+            parent[px] = py;
+        } else if (rank[px] > rank[py]) {
+            parent[py] = px;
+        } else {
+            parent[py] = px;
+            rank[px]++;
+        }
+        components--;
+        return true;
+    }
+    
+    public boolean connected(int x, int y) {
+        return find(x) == find(y);
+    }
+    
+    public int countComponents() {
+        return components;
+    }
+}
+```
+
+### 💼 10 Practice Questions
+
+| # | Pattern | Problem | Platform | Difficulty |
+|---|---------|---------|----------|------------|
+| 1 | Basic | [Number of Provinces](https://leetcode.com/problems/number-of-provinces/) | LeetCode | Medium |
+| 2 | Basic | [Number of Connected Components in Undirected Graph](https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/) | LeetCode | Medium |
+| 3 | Basic | [Friend Circles](https://www.geeksforgeeks.org/problems/friend-circles/0) | GFG | Medium |
+| 4 | Basic | [Graph Connectivity](https://www.geeksforgeeks.org/problems/connecting-the-graph/1) | GFG | Medium |
+| 5 | Basic | [Find the Number of Islands Using DSU](https://www.geeksforgeeks.org/number-of-islands-using-disjoint-set/) | GFG | Medium |
+| 6 | Basic | [Most Stones Removed with Same Row or Column](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) | LeetCode | Medium |
+| 7 | Basic | [Number of Operations to Make Network Connected](https://leetcode.com/problems/number-of-operations-to-make-network-connected/) | LeetCode | Medium |
+| 8 | Basic | [Count Unreachable Pairs of Nodes in Undirected Graph](https://leetcode.com/problems/count-unreachable-pairs-of-nodes-in-an-undirected-graph/) | LeetCode | Medium |
+| 9 | Basic | [Disjoint Set Union Implementation](https://www.geeksforgeeks.org/problems/disjoint-set-union-find/1) | GFG | Easy |
+| 10 | Basic | [Union By Rank and Path Compression](https://www.geeksforgeeks.org/problems/union-find/1) | GFG | Easy |
+
+---
+
+## **PATTERN 2: Cycle Detection in Undirected Graph**
+
+### 📖 Theory
+In an **undirected graph**, adding an edge creates a cycle **if and only if** its two endpoints are already in the same connected component.
+
+**Properties:**
+- Process edges one by one
+- Before union, check if `find(u) == find(v)`
+- If yes → this edge creates a cycle
+- This is how Kruskal's MST algorithm detects cycles 
+
+### 🎨 Visual Diagram
+```
+Edges processed in order:
+
+1. Add edge (0-1): 0 and 1 in different components → union ✅
+   Components: {0,1}, {2}, {3}
+
+2. Add edge (1-2): 1 in {0,1}, 2 in {2} → different → union ✅
+   Components: {0,1,2}, {3}
+
+3. Add edge (0-2): 0 and 2 in SAME component {0,1,2} → CYCLE! ❌
+   Edge (0-2) is redundant
+```
+
+### 🔧 Template Code
+```java
+public int[] findRedundantConnection(int[][] edges, int n) {
+    DSU dsu = new DSU(n);
+    for (int[] edge : edges) {
+        int u = edge[0], v = edge[1];
+        if (dsu.find(u) == dsu.find(v)) {
+            return edge;  // This edge creates a cycle
+        }
+        dsu.union(u, v);
+    }
+    return new int[0];
+}
+```
+
+### 💼 10 Practice Questions
+
+| # | Pattern | Problem | Platform | Difficulty |
+|---|---------|---------|----------|------------|
+| 1 | Cycle | [Redundant Connection](https://leetcode.com/problems/redundant-connection/) | LeetCode | Medium |
+| 2 | Cycle | [Redundant Connection II](https://leetcode.com/problems/redundant-connection-ii/) | LeetCode | Hard |
+| 3 | Cycle | [Detect Cycle in Undirected Graph](https://www.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1) | GFG | Medium |
+| 4 | Cycle | [Graph Valid Tree](https://leetcode.com/problems/graph-valid-tree/) | LeetCode | Medium |
+| 5 | Cycle | [Find if Path Exists in Graph](https://leetcode.com/problems/find-if-path-exists-in-graph/) | LeetCode | Easy |
+| 6 | Cycle | [Cycle Detection in Undirected Graph using DSU](https://www.geeksforgeeks.org/union-find-cycle-detection-union-find/) | GFG | Medium |
+| 7 | Cycle | [Minimum Number of Swaps to Make a String Balanced](https://www.geeksforgeeks.org/minimum-number-of-swaps-to-make-a-string-balanced/) | GFG | Hard |
+| 8 | Cycle | [Check if a Given Graph is Tree or Not](https://www.geeksforgeeks.org/check-given-graph-tree/) | GFG | Medium |
+| 9 | Cycle | [Number of Ways to Reconnect Graph](https://www.geeksforgeeks.org/number-of-ways-to-reconnect-graph/) | GFG | Hard |
+| 10 | Cycle | [Minimum Cost to Connect Sticks](https://www.geeksforgeeks.org/minimum-cost-to-connect-sticks/) | GFG | Medium |
+
+---
+
+## **PATTERN 3: Offline Queries (Sort + Process Incrementally)**
+
+### 📖 Theory
+This is where DSU **truly shines**. When you have queries asking "is there a path with all edges weight < limit?", you can't answer online efficiently. Instead:
+
+1. **Sort edges by weight**
+2. **Sort queries by limit**
+3. **Process queries in increasing order** - add edges gradually
+4. **Answer query** using DSU connectivity check
+
+**Properties:**
+- Time Complexity: O(E log E + Q log Q + (E+Q) × α(n))
+- Much faster than answering each query independently 
+
+### 🎨 Visual Diagram
+```
+Edges: (0-1:5), (1-2:3), (2-3:7), (0-3:9)
+Queries: 
+  Q1: limit=4 → can use edges with weight <4: only (1-2:3)
+  Q2: limit=6 → can use edges weight <6: (1-2:3), (0-1:5)
+  Q3: limit=10 → can use all edges
+
+Process:
+  Sort queries by limit: Q1(4), Q2(6), Q3(10)
+  Pointer i=0 on edges (sorted by weight)
+  
+  For Q1: add edges weight<4 → add (1-2)
+  For Q2: add edges weight<6 → add (0-1)
+  For Q3: add remaining edges → add (2-3), (0-3)
+```
+
+### 🔧 Template Code
+```java
+public boolean[] offlineQueries(int n, int[][] edges, int[][] queries) {
+    // queries: [u, v, limit]
+    Arrays.sort(edges, (a,b) -> a[2] - b[2]);  // sort edges by weight
+    
+    // Prepare queries with original index
+    int q = queries.length;
+    int[][] queriesWithIdx = new int[q][4];
+    for (int i = 0; i < q; i++) {
+        queriesWithIdx[i] = new int[]{queries[i][0], queries[i][1], queries[i][2], i};
+    }
+    Arrays.sort(queriesWithIdx, (a,b) -> a[2] - b[2]);  // sort by limit
+    
+    DSU dsu = new DSU(n);
+    boolean[] ans = new boolean[q];
+    int edgePtr = 0;
+    
+    for (int[] query : queriesWithIdx) {
+        int u = query[0], v = query[1], limit = query[2], idx = query[3];
+        
+        // Add all edges with weight < limit
+        while (edgePtr < edges.length && edges[edgePtr][2] < limit) {
+            dsu.union(edges[edgePtr][0], edges[edgePtr][1]);
+            edgePtr++;
+        }
+        
+        ans[idx] = dsu.connected(u, v);
+    }
+    return ans;
+}
+```
+
+### 💼 10 Practice Questions
+
+| # | Pattern | Problem | Platform | Difficulty |
+|---|---------|---------|----------|------------|
+| 1 | Offline | [Checking Existence of Edge Length Limited Paths](https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths/) | LeetCode | Hard |
+| 2 | Offline | [Checking Existence of Edge Length Limited Paths II](https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths-ii/) | LeetCode | Hard |
+| 3 | Offline | [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) | LeetCode | Medium |
+| 4 | Offline | [Minimum Time to Visit a Cell in a Grid](https://leetcode.com/problems/minimum-time-to-visit-a-cell-in-a-grid/) | LeetCode | Hard |
+| 5 | Offline | [Kruskal's Algorithm for MST](https://www.geeksforgeeks.org/problems/minimum-spanning-tree/1) | GFG | Medium |
+| 6 | Offline | [Minimum Cost to Connect All Points](https://leetcode.com/problems/minimum-cost-to-connect-all-points/) | LeetCode | Medium |
+| 7 | Offline | [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/) | LeetCode | Medium |
+| 8 | Offline | [Offline Dynamic Connectivity](https://www.geeksforgeeks.org/offline-dynamic-connectivity-dsu/) | GFG | Hard |
+| 9 | Offline | [Minimum Cost to Make at Least One Valid Path](https://www.geeksforgeeks.org/minimum-cost-to-make-at-least-one-valid-path/) | GFG | Hard |
+| 10 | Offline | [Number of Good Paths](https://leetcode.com/problems/number-of-good-paths/) | LeetCode | Hard |
+
+---
+
+## **PATTERN 4: String/Email Grouping (Map-Based DSU)**
+
+### 📖 Theory
+Nodes are **not always integers**. When dealing with strings, emails, or objects:
+- **Map each unique value to an index** (0, 1, 2, ...)
+- Use DSU on indices
+- Track which indices belong together
+
+**Properties:**
+- Requires a `HashMap<String, Integer>` for mapping
+- Union entities that share common attributes 
+
+### 🎨 Visual Diagram
+```
+Accounts: [
+  ["John", "j1@mail.com", "j2@mail.com"],
+  ["John", "j2@mail.com", "j3@mail.com"],
+  ["Mary", "m1@mail.com"]
+]
+
+Step 1: Map emails to indices
+  "j1@mail.com" → 0
+  "j2@mail.com" → 1
+  "j3@mail.com" → 2
+  "m1@mail.com" → 3
+
+Step 2: Union emails within same account
+  Account 0: union(0,1)
+  Account 1: union(1,2) → now 0,1,2 all connected
+  Account 2: 3 alone
+
+Result: Component 1: {0,1,2} (John's emails)
+        Component 2: {3} (Mary's email)
+```
+
+### 🔧 Template Code
+```java
+public List<List<String>> accountsMerge(List<List<String>> accounts) {
+    DSU dsu = new DSU(accounts.size());  // One node per account initially
+    Map<String, Integer> emailToAccountId = new HashMap<>();
+    
+    // First pass: Union accounts that share emails
+    for (int i = 0; i < accounts.size(); i++) {
+        List<String> account = accounts.get(i);
+        for (int j = 1; j < account.size(); j++) {
+            String email = account.get(j);
+            if (emailToAccountId.containsKey(email)) {
+                dsu.union(i, emailToAccountId.get(email));
+            } else {
+                emailToAccountId.put(email, i);
+            }
+        }
+    }
+    
+    // Second pass: Group emails by root account
+    Map<Integer, List<String>> rootToEmails = new HashMap<>();
+    for (Map.Entry<String, Integer> entry : emailToAccountId.entrySet()) {
+        int root = dsu.find(entry.getValue());
+        rootToEmails.computeIfAbsent(root, k -> new ArrayList<>()).add(entry.getKey());
+    }
+    
+    // Format output
+    List<List<String>> result = new ArrayList<>();
+    for (Map.Entry<Integer, List<String>> entry : rootToEmails.entrySet()) {
+        List<String> emails = entry.getValue();
+        Collections.sort(emails);
+        List<String> merged = new ArrayList<>();
+        merged.add(accounts.get(entry.getKey()).get(0));  // name
+        merged.addAll(emails);
+        result.add(merged);
+    }
+    return result;
+}
+```
+
+### 💼 10 Practice Questions
+
+| # | Pattern | Problem | Platform | Difficulty |
+|---|---------|---------|----------|------------|
+| 1 | String | [Accounts Merge](https://leetcode.com/problems/accounts-merge/) | LeetCode | Medium |
+| 2 | String | [Similar String Groups](https://leetcode.com/problems/similar-string-groups/) | LeetCode | Hard |
+| 3 | String | [Sentence Similarity II](https://leetcode.com/problems/sentence-similarity-ii/) | LeetCode | Medium |
+| 4 | String | [Evaluate Division](https://leetcode.com/problems/evaluate-division/) | LeetCode | Medium |
+| 5 | String | [Find All People With Secret](https://leetcode.com/problems/find-all-people-with-secret/) | LeetCode | Hard |
+| 6 | String | [Group Anagrams Using DSU](https://www.geeksforgeeks.org/group-anagrams-together-using-dsu/) | GFG | Medium |
+| 7 | String | [Friend Circles in Social Network](https://www.geeksforgeeks.org/friend-circles-using-dsu/) | GFG | Medium |
+| 8 | String | [Email Account Merging](https://www.geeksforgeeks.org/merging-email-accounts-using-dsu/) | GFG | Medium |
+| 9 | String | [Find If Two Strings are Equivalent](https://www.geeksforgeeks.org/check-if-two-strings-are-equivalent-using-dsu/) | GFG | Medium |
+| 10 | String | [Lexicographically Smallest String After Swaps](https://www.geeksforgeeks.org/lexicographically-smallest-string-after-swaps-using-dsu/) | GFG | Hard |
+
+---
+
+## **PATTERN 5: Lexicographical/String Ordering After Swaps**
+
+### 📖 Theory
+You have positions that can be swapped freely. The positions that are **connected** (directly or indirectly) can be rearranged arbitrarily.
+
+**Properties:**
+- Union positions that are connected by swap operations
+- For each component, collect characters at those positions
+- Sort characters in descending order
+- Place back in ascending order of positions 
+
+### 🎨 Visual Diagram
+```
+String: "dcab"
+Swaps: [0,3], [1,2]
+
+Step 1: Build connections
+  Union(0,3)
+  Union(1,2)
+  
+Step 2: Components
+  Component A: positions {0,3} → characters {'d','b'}
+  Component B: positions {1,2} → characters {'c','a'}
+
+Step 3: Sort each component's characters
+  Component A sorted: {'b','d'}
+  Component B sorted: {'a','c'}
+
+Step 4: Place back (positions sorted ascending)
+  pos0 (A) → 'b'
+  pos1 (B) → 'a'
+  pos2 (B) → 'c'
+  pos3 (A) → 'd'
+  
+Result: "bacd"
+```
+
+### 🔧 Template Code
+```java
+public String smallestStringWithSwaps(String s, List<List<Integer>> pairs) {
+    int n = s.length();
+    DSU dsu = new DSU(n);
+    
+    // Union all positions that can be swapped
+    for (List<Integer> pair : pairs) {
+        dsu.union(pair.get(0), pair.get(1));
+    }
+    
+    // Group indices by root
+    Map<Integer, List<Integer>> rootToIndices = new HashMap<>();
+    for (int i = 0; i < n; i++) {
+        int root = dsu.find(i);
+        rootToIndices.computeIfAbsent(root, k -> new ArrayList<>()).add(i);
+    }
+    
+    // Build result
+    char[] result = new char[n];
+    for (Map.Entry<Integer, List<Integer>> entry : rootToIndices.entrySet()) {
+        List<Integer> indices = entry.getValue();
+        
+        // Get characters at these indices
+        List<Character> chars = new ArrayList<>();
+        for (int idx : indices) {
+            chars.add(s.charAt(idx));
+        }
+        
+        // Sort characters ascending
+        Collections.sort(chars);
+        // Sort indices ascending
+        Collections.sort(indices);
+        
+        // Place smallest char at smallest index
+        for (int i = 0; i < indices.size(); i++) {
+            result[indices.get(i)] = chars.get(i);
+        }
+    }
+    return new String(result);
+}
+```
+
+### 💼 10 Practice Questions
+
+| # | Pattern | Problem | Platform | Difficulty |
+|---|---------|---------|----------|------------|
+| 1 | Lexico | [Smallest String With Swaps](https://leetcode.com/problems/smallest-string-with-swaps/) | LeetCode | Medium |
+| 2 | Lexico | [Smallest String After Swaps](https://www.geeksforgeeks.org/smallest-string-after-swaps-using-dsu/) | GFG | Hard |
+| 3 | Lexico | [Minimum Swaps to Make String Equal](https://www.geeksforgeeks.org/minimum-swaps-to-make-string-equal-using-dsu/) | GFG | Hard |
+| 4 | Lexico | [Lexicographically Smallest Equivalent String](https://leetcode.com/problems/lexicographically-smallest-equivalent-string/) | LeetCode | Medium |
+| 5 | Lexico | [Smallest Equivalent String After Swaps](https://www.geeksforgeeks.org/smallest-equivalent-string-after-swaps/) | GFG | Medium |
+| 6 | Lexico | [Rearrange String k Distance Apart](https://www.geeksforgeeks.org/rearrange-string-k-distance-apart-using-dsu/) | GFG | Hard |
+| 7 | Lexico | [String Transformation Using DSU](https://www.geeksforgeeks.org/string-transformation-using-dsu/) | GFG | Medium |
+| 8 | Lexico | [Make String Sorted by Swapping](https://www.geeksforgeeks.org/make-string-sorted-by-swapping-using-dsu/) | GFG | Medium |
+| 9 | Lexico | [Minimum Swaps to Group All 1's Together](https://www.geeksforgeeks.org/minimum-swaps-to-group-all-1s-together-using-dsu/) | GFG | Hard |
+| 10 | Lexico | [Sort String by Swapping with Restrictions](https://www.geeksforgeeks.org/sort-string-by-swapping-with-restrictions-using-dsu/) | GFG | Hard |
+
+---
+
+## **PATTERN 6: Two-Player/Two-Entity Connectivity**
+
+### 📖 Theory
+Problems with **two entities** (Alice and Bob, two networks, etc.). You maintain **two separate DSU structures** or track connectivity for both simultaneously.
+
+**Properties:**
+- Process shared edges first (they benefit both)
+- Then process entity-specific edges
+- Track component counts for each entity separately 
+
+### 🎨 Visual Diagram
+```
+Edges:
+  Type 1: Alice-only
+  Type 2: Bob-only  
+  Type 3: Both can use
+
+Strategy:
+  1. Use Type 3 edges first for BOTH DSUs
+  2. Then use Type 1 for Alice's DSU
+  3. Then use Type 2 for Bob's DSU
+  4. Count unused edges = total - used
+```
+
+### 🔧 Template Code
+```java
+public int maxNumEdgesToRemove(int n, int[][] edges) {
+    DSU alice = new DSU(n);
+    DSU bob = new DSU(n);
+    int edgesUsed = 0;
+    
+    // First: Process type 3 edges (both can use)
+    for (int[] edge : edges) {
+        if (edge[0] == 3) {
+            if (alice.union(edge[1]-1, edge[2]-1) | bob.union(edge[1]-1, edge[2]-1)) {
+                edgesUsed++;
+            }
+        }
+    }
+    
+    // Second: Process type 1 edges (Alice only)
+    for (int[] edge : edges) {
+        if (edge[0] == 1) {
+            if (alice.union(edge[1]-1, edge[2]-1)) {
+                edgesUsed++;
+            }
+        }
+    }
+    
+    // Third: Process type 2 edges (Bob only)
+    for (int[] edge : edges) {
+        if (edge[0] == 2) {
+            if (bob.union(edge[1]-1, edge[2]-1)) {
+                edgesUsed++;
+            }
+        }
+    }
+    
+    // Check if both are fully connected
+    if (alice.countComponents() != 1 || bob.countComponents() != 1) {
+        return -1;
+    }
+    
+    return edges.length - edgesUsed;
+}
+```
+
+### 💼 10 Practice Questions
+
+| # | Pattern | Problem | Platform | Difficulty |
+|---|---------|---------|----------|------------|
+| 1 | Two-Player | [Remove Max Number of Edges to Keep Graph Fully Traversable](https://leetcode.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable/) | LeetCode | Hard |
+| 2 | Two-Player | [Check if Two Networks are Connected](https://www.geeksforgeeks.org/check-if-two-networks-are-connected-using-dsu/) | GFG | Medium |
+| 3 | Two-Player | [Minimum Edges to Add to Make Two Graphs Connected](https://www.geeksforgeeks.org/minimum-edges-to-add-to-make-two-graphs-connected-using-dsu/) | GFG | Hard |
+| 4 | Two-Player | [Number of Ways to Reconnect Two Networks](https://www.geeksforgeeks.org/number-of-ways-to-reconnect-two-networks-using-dsu/) | GFG | Hard |
+| 5 | Two-Player | [Connectivity with Two Types of Edges](https://www.geeksforgeeks.org/connectivity-with-two-types-of-edges-using-dsu/) | GFG | Medium |
+| 6 | Two-Player | [Graph Connectivity with Two Players](https://www.geeksforgeeks.org/graph-connectivity-with-two-players-using-dsu/) | GFG | Hard |
+| 7 | Two-Player | [Minimum Cost to Connect Two Groups](https://www.geeksforgeeks.org/minimum-cost-to-connect-two-groups-using-dsu/) | GFG | Hard |
+| 8 | Two-Player | [Check if Two Graphs are Isomorphic](https://www.geeksforgeeks.org/check-if-two-graphs-are-isomorphic-using-dsu/) | GFG | Hard |
+| 9 | Two-Player | [Merge Two Graphs Using DSU](https://www.geeksforgeeks.org/merge-two-graphs-using-dsu/) | GFG | Medium |
+| 10 | Two-Player | [Minimum Operations to Make Two Graphs Identical](https://www.geeksforgeeks.org/minimum-operations-to-make-two-graphs-identical-using-dsu/) | GFG | Hard |
+
+---
+
+## **PATTERN 7: Prime Factor / GCD-Based Union**
+
+### 📖 Theory
+Elements are connected if they **share a common factor > 1**. Instead of checking all pairs (O(n²)), union each number with its **prime factors**.
+
+**Properties:**
+- For each number, find its prime factors
+- Union the number with each factor (treat factors as nodes)
+- After processing, numbers with shared factors will be in same component 
+
+### 🎨 Visual Diagram
+```
+Numbers: [2, 3, 6, 7, 14]
+
+Step 1: Map numbers to indices
+  2→0, 3→1, 6→2, 7→3, 14→4
+
+Step 2: For each number, union with prime factors
+  2: factors [2] → union(0, 2)
+  3: factors [3] → union(1, 3)
+  6: factors [2,3] → union(2,2), union(2,3)
+  7: factors [7] → union(3,7)
+  14: factors [2,7] → union(4,2), union(4,7)
+
+Result: 
+  Component A: {2,3,6,7,14} (all connected via 2 and 7)
+  Wait, 3 is connected? Yes via 6 (3 and 6 share factor 3)
+  Actually 3 connects to 6, 6 connects to 2, 2 connects to 14, 14 connects to 7
+  So ALL numbers are connected!
+```
+
+### 🔧 Template Code
+```java
+public int largestComponentSize(int[] nums) {
+    int n = nums.length;
+    DSU dsu = new DSU(n);
+    Map<Integer, List<Integer>> factorToNumbers = new HashMap<>();
+    
+    // For each number, find its factors
+    for (int i = 0; i < n; i++) {
+        int num = nums[i];
+        int temp = num;
+        for (int f = 2; f * f <= temp; f++) {
+            if (temp % f == 0) {
+                while (temp % f == 0) temp /= f;
+                factorToNumbers.computeIfAbsent(f, k -> new ArrayList<>()).add(i);
+            }
+        }
+        if (temp > 1) {
+            factorToNumbers.computeIfAbsent(temp, k -> new ArrayList<>()).add(i);
+        }
+    }
+    
+    // Union numbers that share factors
+    for (List<Integer> numberIndices : factorToNumbers.values()) {
+        int first = numberIndices.get(0);
+        for (int i = 1; i < numberIndices.size(); i++) {
+            dsu.union(first, numberIndices.get(i));
+        }
+    }
+    
+    // Count largest component size
+    int[] size = new int[n];
+    int maxSize = 0;
+    for (int i = 0; i < n; i++) {
+        int root = dsu.find(i);
+        size[root]++;
+        maxSize = Math.max(maxSize, size[root]);
+    }
+    return maxSize;
+}
+```
+
+### 💼 10 Practice Questions
+
+| # | Pattern | Problem | Platform | Difficulty |
+|---|---------|---------|----------|------------|
+| 1 | Prime | [Largest Component Size by Common Factor](https://leetcode.com/problems/largest-component-size-by-common-factor/) | LeetCode | Hard |
+| 2 | Prime | [Greatest Common Divisor Traversal](https://leetcode.com/problems/greatest-common-divisor-traversal/) | LeetCode | Hard |
+| 3 | Prime | [Number of Connected Components in GCD Graph](https://www.geeksforgeeks.org/number-of-connected-components-in-gcd-graph-using-dsu/) | GFG | Hard |
+| 4 | Prime | [Group Numbers by GCD](https://www.geeksforgeeks.org/group-numbers-by-gcd-using-dsu/) | GFG | Medium |
+| 5 | Prime | [Maximum GCD After Operations](https://www.geeksforgeeks.org/maximum-gcd-after-operations-using-dsu/) | GFG | Hard |
+| 6 | Prime | [Find if Array Can Be Divided into Pairs with GCD > 1](https://www.geeksforgeeks.org/find-if-array-can-be-divided-into-pairs-with-gcd-1-using-dsu/) | GFG | Hard |
+| 7 | Prime | [Minimum Cost to Make Array GCD 1](https://www.geeksforgeeks.org/minimum-cost-to-make-array-gcd-1-using-dsu/) | GFG | Hard |
+| 8 | Prime | [Connect Numbers Using Prime Factors](https://www.geeksforgeeks.org/connect-numbers-using-prime-factors-using-dsu/) | GFG | Medium |
+| 9 | Prime | [Maximum Size of Connected Component in GCD Graph](https://www.geeksforgeeks.org/maximum-size-of-connected-component-in-gcd-graph-using-dsu/) | GFG | Hard |
+| 10 | Prime | [Count Pairs with GCD > 1 Using DSU](https://www.geeksforgeeks.org/count-pairs-with-gcd-1-using-dsu/) | GFG | Hard |
+
+---
+
+## **PATTERN 8: Equality/Inequality Equations (Satisfiability)**
+
+### 📖 Theory
+Given equations like `"a==b"`, `"c!=d"`, determine if all can be satisfied simultaneously.
+
+**Properties:**
+- **First pass**: Union all variables connected by `==` equations
+- **Second pass**: Check all `!=` equations — if both variables in same component → contradiction 
+
+### 🎨 Visual Diagram
+```
+Equations: 
+  a==b, b==c, c!=d, d==e
+
+Step 1: Process == equations
+  Union(a,b), Union(b,c) → {a,b,c} in same component
+  Union(d,e) → {d,e} in same component
+
+Step 2: Process != equations
+  Check c!=d: c in {a,b,c}, d in {d,e} → Different components ✅ OK
+
+If we had a!=b:
+  a and b in same component → Contradiction! ❌
+```
+
+### 🔧 Template Code
+```java
+public boolean equationsPossible(String[] equations) {
+    DSU dsu = new DSU(26);  // 26 lowercase letters
+    
+    // First pass: Union all '==' equations
+    for (String eq : equations) {
+        if (eq.charAt(1) == '=') {
+            int x = eq.charAt(0) - 'a';
+            int y = eq.charAt(3) - 'a';
+            dsu.union(x, y);
+        }
+    }
+    
+    // Second pass: Check all '!=' equations
+    for (String eq : equations) {
+        if (eq.charAt(1) == '!') {
+            int x = eq.charAt(0) - 'a';
+            int y = eq.charAt(3) - 'a';
+            if (dsu.find(x) == dsu.find(y)) {
+                return false;  // Contradiction
+            }
+        }
+    }
+    return true;
+}
+```
+
+### 💼 10 Practice Questions
+
+| # | Pattern | Problem | Platform | Difficulty |
+|---|---------|---------|----------|------------|
+| 1 | Equality | [Satisfiability of Equality Equations](https://leetcode.com/problems/satisfiability-of-equality-equations/) | LeetCode | Medium |
+| 2 | Equality | [Possibility of Equations](https://www.geeksforgeeks.org/possibility-of-equations-using-dsu/) | GFG | Medium |
+| 3 | Equality | [Check if Equations are Consistent](https://www.geeksforgeeks.org/check-if-equations-are-consistent-using-dsu/) | GFG | Medium |
+| 4 | Equality | [Evaluate Boolean Expressions](https://www.geeksforgeeks.org/evaluate-boolean-expressions-using-dsu/) | GFG | Hard |
+| 5 | Equality | [Variable Equality Queries](https://www.geeksforgeeks.org/variable-equality-queries-using-dsu/) | GFG | Medium |
+| 6 | Equality | [Find If Equations are Satisfiable](https://www.geeksforgeeks.org/find-if-equations-are-satisfiable-using-dsu/) | GFG | Medium |
+| 7 | Equality | [Minimum Number of Changes to Make Equations Satisfiable](https://www.geeksforgeeks.org/minimum-number-of-changes-to-make-equations-satisfiable-using-dsu/) | GFG | Hard |
+| 8 | Equality | [Equation Solver Using DSU](https://www.geeksforgeeks.org/equation-solver-using-dsu/) | GFG | Hard |
+| 9 | Equality | [Check if Constraints are Consistent](https://www.geeksforgeeks.org/check-if-constraints-are-consistent-using-dsu/) | GFG | Medium |
+| 10 | Equality | [Logical Expression Evaluation](https://www.geeksforgeeks.org/logical-expression-evaluation-using-dsu/) | GFG | Hard |
+
+---
+
+## **PATTERN 9: Minimum Time to Connect / Binary Search + DSU**
+
+### 📖 Theory
+Problems asking "minimum maximum effort" or "earliest time when nodes become connected" — use **binary search on answer** + DSU to check feasibility.
+
+**Properties:**
+- Binary search on the threshold (time, effort, distance)
+- For a given threshold, union all edges with weight ≤ threshold
+- Check if source and target are connected 
+
+### 🎨 Visual Diagram
+```
+Find minimum effort path from top-left to bottom-right:
+
+Grid:
+[0, 2, 5]
+[3, 8, 1]
+[4, 6, 7]
+
+Binary Search on effort:
+  low=0, high=8
+  mid=4: Can we reach with max effort ≤4?
+    Union edges with diff ≤4
+    Check if (0,0) and (2,2) connected? No → low=5
+  mid=6: Can we reach with max effort ≤6?
+    Union edges with diff ≤6
+    Check if connected? Yes → high=6
+  Result: 6
+```
+
+### 🔧 Template Code
+```java
+public int minimumEffortPath(int[][] heights) {
+    int m = heights.length, n = heights[0].length;
+    int left = 0, right = 1000000;
+    int ans = right;
+    
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        
+        if (canReach(heights, mid)) {
+            ans = mid;
+            right = mid - 1;
+        } else {
+            left = mid + 1;
+        }
+    }
+    return ans;
+}
+
+private boolean canReach(int[][] heights, int maxDiff) {
+    int m = heights.length, n = heights[0].length;
+    DSU dsu = new DSU(m * n);
+    int[][] dirs = {{0,1},{1,0},{0,-1},{-1,0}};
+    
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            int idx = i * n + j;
+            for (int[] d : dirs) {
+                int ni = i + d[0], nj = j + d[1];
+                if (ni >= 0 && ni < m && nj >= 0 && nj < n) {
+                    int nidx = ni * n + nj;
+                    if (Math.abs(heights[i][j] - heights[ni][nj]) <= maxDiff) {
+                        dsu.union(idx, nidx);
+                    }
+                }
+            }
+        }
+    }
+    
+    return dsu.connected(0, m * n - 1);
+}
+```
+
+### 💼 10 Practice Questions
+
+| # | Pattern | Problem | Platform | Difficulty |
+|---|---------|---------|----------|------------|
+| 1 | BS+DSU | [Path With Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) | LeetCode | Medium |
+| 2 | BS+DSU | [Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/) | LeetCode | Hard |
+| 3 | BS+DSU | [Minimum Time to Visit a Cell in a Grid](https://leetcode.com/problems/minimum-time-to-visit-a-cell-in-a-grid/) | LeetCode | Hard |
+| 4 | BS+DSU | [Minimum Cost to Make at Least One Valid Path](https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/) | LeetCode | Hard |
+| 5 | BS+DSU | [Earliest Time When Nodes Become Connected](https://www.geeksforgeeks.org/earliest-time-when-nodes-become-connected-using-dsu/) | GFG | Hard |
+| 6 | BS+DSU | [Minimum Maximum Distance in a Graph](https://www.geeksforgeeks.org/minimum-maximum-distance-in-a-graph-using-dsu/) | GFG | Hard |
+| 7 | BS+DSU | [Connect Cities with Minimum Cost](https://www.geeksforgeeks.org/connect-cities-with-minimum-cost-using-dsu/) | GFG | Medium |
+| 8 | BS+DSU | [Minimum Time to Reach Destination](https://www.geeksforgeeks.org/minimum-time-to-reach-destination-using-dsu/) | GFG | Hard |
+| 9 | BS+DSU | [Path with Minimum Maximum Edge Weight](https://www.geeksforgeeks.org/path-with-minimum-maximum-edge-weight-using-dsu/) | GFG | Hard |
+| 10 | BS+DSU | [Minimize the Maximum Difference in a Path](https://www.geeksforgeeks.org/minimize-the-maximum-difference-in-a-path-using-dsu/) | GFG | Hard |
+
+---
+
+## **PATTERN 10: Reverse Thinking / Time-Travel DSU**
+
+### 📖 Theory
+Problems that ask "what happens if we remove edges" — instead of removing, **add edges in reverse order**.
+
+**Properties:**
+- Start from the final state (after all removals)
+- Process operations backwards
+- When we "remove" in original, we "add" in reverse 
+
+### 🎨 Visual Diagram
+```
+Original: Remove edges in order: e1, e2, e3
+          0---1---2
+          |       |
+          3-------4
+
+Forward thinking (hard): 
+  Start with graph, remove e1, track connectivity changes
+
+Reverse thinking (easy):
+  Start with graph MINUS e1,e2,e3
+  Add e3, then e2, then e1
+  Track when components merge
+```
+
+### 🔧 Template Code
+```java
+public int[] findRedundantConnection(int[][] edges) {
+    int n = edges.length;
+    DSU dsu = new DSU(n + 1);
+    
+    for (int[] edge : edges) {
+        if (!dsu.union(edge[0], edge[1])) {
+            return edge;  // This edge creates a cycle
+        }
+    }
+    return new int[0];
+}
+
+// For removal problems:
+public List<Boolean> areConnectedAfterRemovals(int n, int[][] edges, int[][] queries) {
+    // Process queries in reverse: removals become additions
+    DSU dsu = new DSU(n);
+    Set<String> removed = new HashSet<>();
+    
+    // Mark edges that will be removed
+    for (int[] q : queries) {
+        removed.add(q[0] + "," + q[1]);
+    }
+    
+    // Add edges that are never removed
+    for (int[] e : edges) {
+        if (!removed.contains(e[0] + "," + e[1])) {
+            dsu.union(e[0], e[1]);
+        }
+    }
+    
+    // Process queries in reverse
+    List<Boolean> ans = new ArrayList<>();
+    for (int i = queries.length - 1; i >= 0; i--) {
+        ans.add(dsu.connected(queries[i][0], queries[i][1]));
+        dsu.union(queries[i][0], queries[i][1]);  // Add edge back
+    }
+    Collections.reverse(ans);
+    return ans;
+}
+```
+
+### 💼 10 Practice Questions
+
+| # | Pattern | Problem | Platform | Difficulty |
+|---|---------|---------|----------|------------|
+| 1 | Reverse | [Redundant Connection](https://leetcode.com/problems/redundant-connection/) | LeetCode | Medium |
+| 2 | Reverse | [Checking Existence of Edge Length Limited Paths](https://leetcode.com/problems/checking-existence-of-edge-length-limited-paths/) | LeetCode | Hard |
+| 3 | Reverse | [Dynamic Connectivity Queries](https://www.geeksforgeeks.org/dynamic-connectivity-queries-using-dsu/) | GFG | Hard |
+| 4 | Reverse | [Offline Dynamic Connectivity](https://www.geeksforgeeks.org/offline-dynamic-connectivity-dsu/) | GFG | Hard |
+| 5 | Reverse | [Find When Nodes Become Disconnected](https://www.geeksforgeeks.org/find-when-nodes-become-disconnected-using-dsu/) | GFG | Hard |
+| 6 | Reverse | [Minimum Edges to Remove to Disconnect Graph](https://www.geeksforgeeks.org/minimum-edges-to-remove-to-disconnect-graph-using-dsu/) | GFG | Hard |
+| 7 | Reverse | [Process Queries of Edge Removals](https://www.geeksforgeeks.org/process-queries-of-edge-removals-using-dsu/) | GFG | Hard |
+| 8 | Reverse | [Connectivity After Edge Removals](https://www.geeksforgeeks.org/connectivity-after-edge-removals-using-dsu/) | GFG | Hard |
+| 9 | Reverse | [Number of Connected Components After Removals](https://www.geeksforgeeks.org/number-of-connected-components-after-removals-using-dsu/) | GFG | Hard |
+| 10 | Reverse | [Dynamic Graph Connectivity Queries](https://www.geeksforgeeks.org/dynamic-graph-connectivity-queries-using-dsu/) | GFG | Hard |
+
+---
+
+## **SUMMARY: DSU Pattern Recognition Table**
+
+| Pattern Name | Problem Signal | Key Insight | Time Complexity |
+|--------------|---------------|-------------|-----------------|
+| **Basic Connectivity** | "Find connected components", "Merge groups" | Count roots after all unions | O(E × α(n)) |
+| **Cycle Detection** | "Find redundant edge", "Is this a tree?" | If find(u)==find(v) before union → cycle | O(E × α(n)) |
+| **Offline Queries** | "Answer queries with thresholds", "Process in order" | Sort queries + edges, process incrementally | O((E+Q) log(E+Q)) |
+| **String/Email Grouping** | "Merge accounts", "Group similar strings" | Map strings to indices first | O(N log N) |
+| **Lexicographical Ordering** | "Smallest string after swaps" | Sort each component's characters independently | O(N log N) |
+| **Two-Player Connectivity** | "Alice and Bob can use different edges" | Process shared edges first | O(E × α(n)) |
+| **Prime Factor Union** | "Connected by common factor > 1" | Union with prime factors, not numbers | O(N × √max) |
+| **Equality/Inequality** | "a==b, c!=d equations" | Union '==', check '!=' | O(N × α(26)) |
+| **Binary Search + DSU** | "Minimize maximum effort", "Earliest time" | Binary search + DSU check | O(log(max) × E × α(n)) |
+| **Reverse Thinking** | "Removing edges", "Time-travel queries" | Process operations backwards | O((E+Q) × α(n)) |
+
+---
+
+## **Quick Reference: When to Use Which Pattern**
+
+```
+"Count components" → Pattern 1 (Basic Connectivity)
+"Find cycle/extra edge" → Pattern 2 (Cycle Detection)
+"Queries with thresholds" → Pattern 3 (Offline Queries)
+"Merge accounts/emails" → Pattern 4 (String Grouping)
+"Swap to get smallest string" → Pattern 5 (Lexicographical)
+"Alice and Bob" → Pattern 6 (Two-Player)
+"Share common factor" → Pattern 7 (Prime Factor)
+"a==b, c!=d equations" → Pattern 8 (Equality)
+"Minimize maximum effort" → Pattern 9 (Binary Search + DSU)
+"Removing edges dynamically" → Pattern 10 (Reverse Thinking)
+```
+
+---
+
+## Next Topic?
+
+Would you like me to continue with the **next graph topic** using the SAME pattern-based structure?
+
+Choose a topic:
+1. **BFS/DFS** (Traversal patterns)
+2. **Dijkstra** (Shortest path patterns)
+3. **Topological Sort** (Ordering patterns)
+4. **Minimum Spanning Tree** (MST patterns)
+5. **Cycle Detection** (All variations)
+
+Each topic will have the **exact same structure**: theory + properties + visual + template + 10 pattern-based questions (5 LeetCode + 5 GFG).

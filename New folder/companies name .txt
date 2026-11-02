@@ -1,0 +1,351 @@
+🔥 100 TARGET COMPANIES (Categorized for Strategy)
+🟢 Tier 1: High-probability (APPLY FIRST – strong match)
+
+These companies LOVE your stack (Java + Kafka + distributed systems):
+
+Razorpay
+CRED
+Meesho
+Groww
+Zerodha
+Upstox
+CoinDCX
+PhonePe
+Paytm
+Pine Labs
+
+➡️ Why: Low latency + high throughput systems (perfect match with NSE exp)
+
+🔵 Tier 2: SaaS / Product Companies (REMOTE FRIENDLY)
+Freshworks
+Zoho
+Postman
+BrowserStack
+Chargebee
+Clevertap
+MoEngage
+Hasura
+Appsmith
+Supabase
+
+➡️ Why: Strong backend + API + distributed infra roles
+
+🟡 Tier 3: Global Remote-First / Remote-heavy
+Atlassian
+BairesDev
+Cimpress
+Harness
+GitLab
+Elastic
+Red Hat
+Docker
+HashiCorp
+Stripe
+
+➡️ Why: Remote culture + Kubernetes / DevOps + backend
+
+🟠 Tier 4: High-growth Startups (VERY IMPORTANT)
+Zepto
+Swiggy
+Zomato
+Urban Company
+Unacademy
+PhysicsWallah
+Slice
+Khatabook
+Rupeek
+Credgenics
+
+➡️ Why: Scaling infra → heavy backend hiring
+
+🔴 Tier 5: Data / AI / Infra-heavy (matches your Kafka + system design)
+AiDash
+Fractal Analytics
+Tiger Analytics
+Glean
+Rippling
+Snowflake
+Databricks
+Confluent
+Cloudera
+ThoughtSpot
+
+➡️ Why: Kafka + distributed systems = 🔥 match
+
+🟣 Tier 6: Mid-size Product + GCC (VERY underrated)
+
+(These are GOLD for your profile)
+
+Nielsen
+Warner Bros Discovery
+Salesforce India
+SAP Labs India
+Oracle India
+Adobe India
+Intuit India
+PayPal India
+Mastercard India
+Visa India
+
+➡️ Why: Stable + backend-heavy + hiring growth
+
+⚡ Tier 7: Hidden gems (LOW competition, HIGH ROI)
+
+These are where you can actually crack interviews faster:
+
+Scaler
+InterviewBit
+Relevel
+Turing
+Cactus Communications
+LambdaTest
+BrowserStack
+Posthog
+Airbyte
+RudderStack
+
+
+
+
+
+
+
+
+🚀 60 HIGH-QUALITY MID / SMALL STABLE STARTUPS (India)
+🟢 SaaS / Backend-heavy (BEST MATCH FOR YOU)
+
+These are GOLD for your Kafka + distributed systems profile:
+
+Wingify (recent funding 🔥)
+PostHog (remote-first)
+Appsmith
+Hasura
+Supabase (remote)
+Airbyte
+RudderStack
+BrowserStack
+LambdaTest
+Chargebee
+SpotDraft
+Perfios
+Icertis
+Druva
+Freshservice (Freshworks division)
+Deskera
+LeadSquared
+MoEngage
+CleverTap
+Whatfix
+
+👉 SaaS is booming in India with hundreds of companies growing rapidly
+
+🔵 Infra / DevTools / Data (VERY HIGH FIT)
+
+These companies love engineers like you:
+
+Harness
+GitLab (remote)
+Elastic
+Docker
+HashiCorp
+Confluent (Kafka 🔥)
+Snowflake
+Databricks
+Glean
+Turing
+SigNoz (open-source observability 🔥)
+Log9 Materials (infra-tech)
+Facets.cloud
+Infra.Market (tech + infra backend)
+Onehouse (data infra)
+🟡 Fintech / Trading / Low Latency (PERFECT MATCH)
+
+Closest to your NSE experience:
+
+Smallcase
+Jupiter
+Fi Money
+Jar
+KreditBee
+MoneyView
+Mobikwik
+ZestMoney
+Open Financial
+RazorpayX
+
+👉 Fintech startups are among the top funded & growing sectors
+
+🟠 Emerging AI / Data startups (growing FAST)
+Frammer AI
+Wobot AI
+Uniphore
+Mad Street Den
+Yellow.ai
+Gnani.ai
+Skit.ai
+Rephrase.ai
+Observe.ai
+Haptik
+🟣 Hidden gems (LOW competition, HIGH chance of selection)
+
+These are your secret weapons:
+
+Cactus Communications
+InterviewBit
+Scaler
+Pepcoding
+Coding Ninjas
+Classplus
+Teachmint
+Graphy
+Pepper Content
+Sprinto
+⚡ Early-stage but FUNDED (high risk–high reward)
+
+Apply selectively:
+
+Lucidity
+Weekday
+Swish
+Convin
+Jar (again strong growth)
+Loop Health
+Fashinza
+Cuemath
+Innoviti
+Rupeek
+
+
+
+Tier A (apply daily)
+Hasura
+Appsmith
+BrowserStack
+PostHog
+SigNoz
+Smallcase
+Jupiter
+Chargebee
+
+Tier B
+Perfios
+MoEngage
+CleverTap
+LeadSquared
+Airbyte
+RudderStack
+
+
+🌍 50 GLOBAL REMOTE-FIRST COMPANIES (HIGHLY RELEVANT)
+🟢 Tier 1: ALWAYS HIRING (Bookmark these 🚨)
+
+These companies hire engineers continuously (best ROI):
+
+GitLab
+Automattic
+Elastic
+Canonical
+Zapier
+Toggl
+
+💡 These companies are known to hire globally and async-first teams
+
+👉 PERFECT for:
+
+Backend Engineer
+Platform Engineer
+DevOps / SRE
+🔵 Tier 2: Developer Tools / Infra (BEST MATCH FOR YOU)
+
+These are 🔥 for Kafka + distributed systems:
+
+Stripe
+HashiCorp
+Docker
+Confluent
+Snowflake
+Databricks
+Supabase
+Airbyte
+RudderStack
+
+👉 These companies build exact systems you already worked on
+
+🟡 Tier 3: Remote SaaS Startups (HIGH SUCCESS RATE)
+PostHog
+Appsmith
+Hasura
+Chargebee
+CleverTap
+MoEngage
+BrowserStack
+LambdaTest
+
+👉 SaaS companies are actively expanding engineering teams globally
+
+🟠 Tier 4: Remote-first startups (hidden gems 🚀)
+
+LOW competition → HIGH selection chance:
+
+Buffer
+DuckDuckGo
+Medium
+Remote.com
+Velocity Global
+Mercor
+Turing
+
+👉 Remote hiring infra companies are growing fast because global hiring is increasing
+
+🔴 Tier 5: AI / New-age startups (FAST GROWING)
+Glean
+Scale AI
+Replicate
+Hugging Face
+Weights & Biases
+
+👉 These hire backend + infra engineers heavily
+
+⚡ Tier 6: Platforms that connect you to MANY startups
+
+(Use these SMARTLY)
+
+Toptal
+Proxify
+BairesDev
+
+👉 One profile → multiple interviews
+👉 Many startups hire through these platforms
+
+🧠 KEY INSIGHT (THIS IS GOLD)
+
+👉 There are 750+ remote companies hiring globally right now
+
+👉 And:
+
+Backend
+Full Stack
+DevOps
+
+are top remote roles worldwide
+
+🎯 YOUR BEST TARGET BUCKET (FOCUS HERE)
+
+If you want maximum success, prioritize:
+
+🔥 Top 15 (apply immediately)
+GitLab
+Stripe
+Supabase
+PostHog
+Appsmith
+Hasura
+Confluent
+Databricks
+BrowserStack
+Chargebee
+Remote.com
+Turing
+Elastic
+Canonical
+Zapier

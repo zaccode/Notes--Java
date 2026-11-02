@@ -1,0 +1,2884 @@
+I'll create two comprehensive books for you: **Book 1: Cloud Computing (Basic to Advanced)** and **Book 2: AWS for Developer & DevOps Engineer**. Each book will be detailed with diagrams, examples, real-world scenarios, and tool comparisons.
+
+---
+
+# BOOK 1: CLOUD COMPUTING
+## From Fundamentals to Advanced System Design
+
+**Complete Guide for Interview Preparation with Diagrams**
+
+---
+
+### About This Book
+
+Dear Reader,
+
+This book is designed to take you from cloud computing basics to advanced system design concepts. Whether you're a beginner or an experienced developer, this book will build your cloud fundamentals and help you think like a cloud architect.
+
+Every concept is explained in simple English with diagrams, real-world examples, and practical scenarios. By the end of this book, you will understand not just what cloud computing is, but how to design scalable, resilient systems in the cloud.
+
+Let's begin your cloud journey.
+
+---
+
+[Page 2]
+
+# TABLE OF CONTENTS
+
+**PART ONE: FUNDAMENTALS OF CLOUD**
+- Chapter 1: What is Cloud Computing
+- Chapter 2: Types of Cloud
+- Chapter 3: Cloud Service Models
+
+**PART TWO: CORE CONCEPTS**
+- Chapter 4: Virtualization & Containers
+- Chapter 5: Networking Basics
+- Chapter 6: Storage in Cloud
+
+**PART THREE: CLOUD ARCHITECTURE**
+- Chapter 7: High Availability
+- Chapter 8: Scalability
+- Chapter 9: Fault Tolerance
+
+**PART FOUR: ADVANCED CONCEPTS**
+- Chapter 10: Microservices Architecture
+- Chapter 11: Event-Driven Systems
+- Chapter 12: Distributed Systems Basics
+
+**PART FIVE: DEVOPS IN CLOUD**
+- Chapter 13: CI/CD Pipelines
+- Chapter 14: Infrastructure as Code (IaC)
+- Chapter 15: Monitoring & Logging
+
+**PART SIX: SECURITY**
+- Chapter 16: Identity & Access Management (IAM)
+- Chapter 17: Network Security
+
+**PART SEVEN: REAL-WORLD SYSTEM DESIGN**
+- Chapter 18: URL Shortener Design
+- Chapter 19: Netflix-like System Design
+- Chapter 20: Chat System Design
+
+---
+
+[Page 3]
+
+# PART ONE: FUNDAMENTALS OF CLOUD
+
+## Chapter 1: What is Cloud Computing
+
+**Simple Definition**
+
+Cloud computing is the delivery of computing services—servers, storage, databases, networking, software—over the internet ("the cloud") instead of owning and maintaining physical data centers and servers.
+
+**Technical Definition**
+
+Cloud computing is a model for enabling ubiquitous, convenient, on-demand network access to a shared pool of configurable computing resources that can be rapidly provisioned and released with minimal management effort or service provider interaction.
+
+**Diagram: Cloud Computing Overview**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         CLOUD COMPUTING                               │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         USERS                                     │ │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐       │ │
+│  │  │   Web    │  │  Mobile  │  │   IoT    │  │  API     │       │ │
+│  │  │   App    │  │   App    │  │  Device  │  │  Client  │       │ │
+│  │  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘       │ │
+│  │       │             │             │             │              │ │
+│  └───────┼─────────────┼─────────────┼─────────────┼──────────────┘ │
+│          │             │             │             │                │
+│          └─────────────┼─────────────┼─────────────┘                │
+│                        │             │                              │
+│                        ▼             ▼                              │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                      INTERNET (THE CLOUD)                        │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    CLOUD PROVIDER                                 │ │
+│  │                    (AWS, Azure, GCP)                             │ │
+│  │                                                                   │ │
+│  │  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐       │ │
+│  │  │   Compute     │  │   Storage     │  │  Databases    │       │ │
+│  │  │   (EC2, etc.) │  │   (S3, etc.)  │  │   (RDS, etc.) │       │ │
+│  │  └───────────────┘  └───────────────┘  └───────────────┘       │ │
+│  │                                                                   │ │
+│  │  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐       │ │
+│  │  │  Networking   │  │   Analytics   │  │    ML/AI      │       │ │
+│  │  └───────────────┘  └───────────────┘  └───────────────┘       │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Evolution: On-Premise → Virtualization → Cloud**
+
+| Era | Approach | Description | Pros | Cons |
+|-----|----------|-------------|------|------|
+| **1990s-2000s** | On-Premise | Own servers in your data center | Full control | Expensive, hard to scale |
+| **2000s-2010s** | Virtualization | VMs on shared hardware | Better utilization | Still need hardware |
+| **2010s+** | Cloud | Rent resources on demand | Pay as you go, elastic | Less control |
+
+**Real-World Analogy: Renting vs Owning a Home**
+
+- **On-Premise (Owning):** You buy land, build a house, maintain everything. You have full control but high upfront cost and ongoing maintenance.
+
+- **Cloud (Renting):** You rent an apartment. You pay only for what you use. Someone else handles maintenance, security, utilities. You can move out anytime.
+
+**Why Cloud Exists**
+
+1. **Cost Efficiency:** Pay only for what you use (no upfront hardware costs)
+2. **Elasticity:** Scale up during demand, scale down during low usage
+3. **Global Reach:** Deploy applications close to users worldwide
+4. **Reliability:** Built-in redundancy, backups, disaster recovery
+5. **Speed:** Deploy resources in minutes, not weeks
+6. **Focus:** Developers focus on code, not infrastructure
+
+**Key Characteristics of Cloud (NIST Definition)**
+
+1. **On-Demand Self-Service:** Provision resources without human interaction
+2. **Broad Network Access:** Accessible from anywhere (internet)
+3. **Resource Pooling:** Multi-tenant model, resources shared
+4. **Rapid Elasticity:** Scale out/in quickly
+5. **Measured Service:** Pay-per-use metering
+
+---
+
+[Page 4]
+
+## Chapter 2: Types of Cloud
+
+**1. Public Cloud**
+
+Cloud services offered over the public internet, shared across multiple organizations.
+
+**Examples:** AWS, Microsoft Azure, Google Cloud Platform (GCP)
+
+**Characteristics:**
+- Services delivered over public internet
+- Shared infrastructure (multi-tenant)
+- Pay-as-you-go pricing
+- No hardware to manage
+
+**Diagram: Public Cloud**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         PUBLIC CLOUD                                 │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐           │
+│  │ Company A│  │ Company B│  │ Company C│  │ Company D│           │
+│  │  (Tenant)│  │  (Tenant)│  │  (Tenant)│  │  (Tenant)│           │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘           │
+│       │             │             │             │                  │
+│       └─────────────┼─────────────┼─────────────┘                  │
+│                     │             │                                 │
+│                     ▼             ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    SHARED CLOUD INFRASTRUCTURE                   │ │
+│  │              (Servers, Storage, Networking)                      │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Advantages:**
+- Low cost (shared infrastructure)
+- No maintenance
+- Infinite scalability
+- Quick deployment
+
+**Disadvantages:**
+- Less control
+- Security concerns (shared environment)
+- Compliance challenges for regulated industries
+
+---
+
+**2. Private Cloud**
+
+Cloud infrastructure dedicated to a single organization, either on-premises or hosted by a third party.
+
+**Examples:** OpenStack, VMware vSphere, Azure Stack
+
+**Characteristics:**
+- Dedicated infrastructure
+- Single organization only
+- More control over security
+- Higher cost
+
+**Diagram: Private Cloud**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         PRIVATE CLOUD                                │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                        COMPANY X                                 │ │
+│  │                                                                   │ │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐       │ │
+│  │  │ Dept A   │  │ Dept B   │  │ Dept C   │  │ Dept D   │       │ │
+│  │  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘       │ │
+│  │       │             │             │             │              │ │
+│  │       └─────────────┼─────────────┼─────────────┘              │ │
+│  │                     │             │                             │ │
+│  │                     ▼             ▼                             │ │
+│  │  ┌─────────────────────────────────────────────────────────────┐│ │
+│  │  │              DEDICATED INFRASTRUCTURE                        ││ │
+│  │  │          (Only Company X uses these resources)              ││ │
+│  │  └─────────────────────────────────────────────────────────────┘│ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Advantages:**
+- Full control
+- Better security
+- Compliance ready
+- Predictable performance
+
+**Disadvantages:**
+- High cost
+- Requires maintenance
+- Limited scalability (hardware limits)
+- Longer deployment times
+
+---
+
+**3. Hybrid Cloud**
+
+Combines public and private clouds, allowing data and applications to share between them.
+
+**Characteristics:**
+- Mix of public and private
+- Workload portability
+- Burst to public cloud during spikes
+- Sensitive data stays private
+
+**Diagram: Hybrid Cloud**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         HYBRID CLOUD                                 │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────┐    ┌─────────────────────────────┐ │
+│  │        PRIVATE CLOUD        │    │        PUBLIC CLOUD         │ │
+│  │        (Sensitive Data)     │    │      (Public Workloads)     │ │
+│  │                             │    │                             │ │
+│  │  ┌─────────────────────┐   │    │   ┌─────────────────────┐   │ │
+│  │  │  Customer Database  │   │    │   │   Web Servers       │   │ │
+│  │  │  Financial Records  │   │    │   │   App Servers       │   │ │
+│  │  │  Internal Apps      │   │    │   │   Dev/Test          │   │ │
+│  │  └─────────────────────┘   │    │   └─────────────────────┘   │ │
+│  │                             │    │                             │ │
+│  └──────────────┬──────────────┘    └──────────────┬──────────────┘ │
+│                 │                                   │                │
+│                 └───────────────┬───────────────────┘                │
+│                                 │                                    │
+│                                 │ Encrypted VPN/Private Link        │
+│                                 ▼                                    │
+│                    ┌─────────────────────────┐                      │
+│                    │     SECURE CONNECTION    │                      │
+│                    │    (Data Synchronization)│                      │
+│                    └─────────────────────────┘                      │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Advantages:**
+- Best of both worlds
+- Security for sensitive data
+- Scalability for variable workloads
+- Cost optimization
+
+**Disadvantages:**
+- Complex to manage
+- Integration challenges
+- Higher operational overhead
+
+---
+
+**4. Multi-Cloud**
+
+Using multiple public cloud providers simultaneously (AWS + Azure + GCP).
+
+**Characteristics:**
+- Multiple cloud providers
+- Avoid vendor lock-in
+- Best-of-breed services
+- Redundancy across providers
+
+**Diagram: Multi-Cloud**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         MULTI-CLOUD                                  │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         YOUR APPLICATION                         │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│          ┌─────────────────────────┼─────────────────────────┐       │
+│          │                         │                         │       │
+│          ▼                         ▼                         ▼       │
+│  ┌───────────────┐        ┌───────────────┐        ┌───────────────┐ │
+│  │      AWS      │        │     Azure     │        │      GCP      │ │
+│  │               │        │               │        │               │ │
+│  │ • EC2         │        │ • VMs         │        │ • Compute     │ │
+│  │ • S3          │        │ • Blob        │        │ • Storage     │ │
+│  │ • Lambda      │        │ • Functions   │        │ • Functions   │ │
+│  └───────────────┘        └───────────────┘        └───────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Advantages:**
+- No vendor lock-in
+- Best services from each provider
+- Higher redundancy
+- Geographic optimization
+
+**Disadvantages:**
+- Complex management
+- Higher costs
+- Integration complexity
+- Security across clouds
+
+---
+
+[Page 5]
+
+## Chapter 3: Cloud Service Models
+
+**Diagram: Service Models Stack**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     CLOUD SERVICE MODELS                              │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                           USER                                    │ │
+│  │                     (Interacts via browser/API)                  │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                            SaaS                                   │ │
+│  │                   (Software as a Service)                         │ │
+│  │                                                                   │ │
+│  │  User manages: NOTHING (just uses the application)              │ │
+│  │  Provider manages: Everything (application, data, runtime,       │ │
+│  │                     middleware, OS, virtualization, servers)      │ │
+│  │                                                                   │ │
+│  │  Examples: Gmail, Salesforce, Dropbox, Office 365               │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                            PaaS                                   │ │
+│  │                   (Platform as a Service)                         │ │
+│  │                                                                   │ │
+│  │  User manages: Application + Data                                │ │
+│  │  Provider manages: Runtime, middleware, OS, virtualization,      │ │
+│  │                     servers, storage, networking                  │ │
+│  │                                                                   │ │
+│  │  Examples: Heroku, Google App Engine, AWS Elastic Beanstalk      │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                            IaaS                                   │ │
+│  │                   (Infrastructure as a Service)                   │ │
+│  │                                                                   │ │
+│  │  User manages: Application, Data, Runtime, middleware, OS        │ │
+│  │  Provider manages: Virtualization, servers, storage, networking  │ │
+│  │                                                                   │ │
+│  │  Examples: AWS EC2, Google Compute Engine, Azure VMs             │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                       INFRASTRUCTURE                              │ │
+│  │              (Physical servers, storage, networking)             │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**IaaS (Infrastructure as a Service)**
+
+**Definition:** Provides virtualized computing resources over the internet. You rent servers, storage, networking.
+
+**What you manage:** Applications, data, runtime, middleware, OS
+**Provider manages:** Virtualization, servers, storage, networking
+
+**When to use:**
+- Need full control over OS and software
+- Running custom applications
+- Lift-and-shift migration
+- Need specific configurations
+
+**Examples:** AWS EC2, Google Compute Engine, Azure Virtual Machines
+
+**Real scenario:** Hosting a web application with specific security requirements
+
+---
+
+**PaaS (Platform as a Service)**
+
+**Definition:** Provides a platform to develop, run, and manage applications without managing infrastructure.
+
+**What you manage:** Applications, data
+**Provider manages:** Runtime, middleware, OS, virtualization, servers, storage, networking
+
+**When to use:**
+- Want to focus on coding, not infrastructure
+- Rapid development and deployment
+- Don't need OS-level control
+- Building web applications
+
+**Examples:** Heroku, Google App Engine, AWS Elastic Beanstalk
+
+**Real scenario:** A startup building a web app wants to deploy quickly without managing servers
+
+---
+
+**SaaS (Software as a Service)**
+
+**Definition:** Provides ready-to-use software over the internet.
+
+**What you manage:** Nothing (just use the application)
+**Provider manages:** Everything
+
+**When to use:**
+- Need standard business applications
+- No customization needed
+- Want zero maintenance
+- Pay per user
+
+**Examples:** Gmail, Salesforce, Dropbox, Office 365, Slack
+
+**Real scenario:** A company needs email and collaboration tools (Gmail, Slack)
+
+---
+
+**Comparison Table**
+
+| Aspect | IaaS | PaaS | SaaS |
+|--------|------|------|------|
+| Control | High | Medium | Low |
+| Management | You manage OS/apps | You manage only apps | Provider manages all |
+| Flexibility | Most flexible | Less flexible | Least flexible |
+| Time to deploy | Minutes to hours | Minutes | Instant |
+| Use case | Lift-and-shift | Custom apps | Ready-to-use software |
+| Examples | EC2, VMs | Heroku, App Engine | Gmail, Salesforce |
+
+---
+
+[Page 6]
+
+# PART TWO: CORE CONCEPTS
+
+## Chapter 4: Virtualization & Containers
+
+**What is Virtualization?**
+
+Virtualization is the process of creating a virtual version of something—servers, storage, networks—using software to simulate hardware.
+
+**Diagram: Virtual Machines**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    TRADITIONAL (No Virtualization)                   │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                        PHYSICAL SERVER                           │ │
+│  ├─────────────────────────────────────────────────────────────────┤ │
+│  │  ┌─────────────────────────────────────────────────────────────┐│ │
+│  │  │                        Operating System                      ││ │
+│  │  └─────────────────────────────────────────────────────────────┘│ │
+│  │  ┌─────────────────────────────────────────────────────────────┐│ │
+│  │  │                      Application                             ││ │
+│  │  └─────────────────────────────────────────────────────────────┘│ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  (One server, one OS, one application)                               │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                      WITH VIRTUALIZATION                              │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                        PHYSICAL SERVER                           │ │
+│  ├─────────────────────────────────────────────────────────────────┤ │
+│  │  ┌─────────────────────────────────────────────────────────────┐│ │
+│  │  │                       HYPERVISOR                             ││ │
+│  │  │                   (Virtualization Layer)                     ││ │
+│  │  └─────────────────────────────────────────────────────────────┘│ │
+│  │                                                                   │ │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │ │
+│  │  │    VM 1      │  │    VM 2      │  │    VM 3      │          │ │
+│  │  │  ┌────────┐  │  │  ┌────────┐  │  │  ┌────────┐  │          │ │
+│  │  │  │  OS    │  │  │  │  OS    │  │  │  │  OS    │  │          │ │
+│  │  │  ├────────┤  │  │  ├────────┤  │  │  ├────────┤  │          │ │
+│  │  │  │  App   │  │  │  │  App   │  │  │  │  App   │  │          │ │
+│  │  │  └────────┘  │  │  └────────┘  │  │  └────────┘  │          │ │
+│  │  └──────────────┘  └──────────────┘  └──────────────┘          │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  (One server, multiple VMs, each with own OS)                        │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Hypervisor:** Software that creates and manages virtual machines (Type 1: runs on hardware, Type 2: runs on host OS)
+
+---
+
+**Virtual Machines vs Containers**
+
+**Diagram: VMs vs Containers**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    VIRTUAL MACHINES                                   │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐              │
+│  │    VM 1      │  │    VM 2      │  │    VM 3      │              │
+│  │  ┌────────┐  │  │  ┌────────┐  │  │  ┌────────┐  │              │
+│  │  │  App   │  │  │  │  App   │  │  │  │  App   │  │              │
+│  │  ├────────┤  │  │  ├────────┤  │  │  ├────────┤  │              │
+│  │  │ Bins/  │  │  │  │ Bins/  │  │  │  │ Bins/  │  │              │
+│  │  │ Libs   │  │  │  │ Libs   │  │  │  │ Libs   │  │              │
+│  │  ├────────┤  │  │  ├────────┤  │  │  ├────────┤  │              │
+│  │  │  Guest │  │  │  │  Guest │  │  │  │  Guest │  │              │
+│  │  │   OS   │  │  │  │   OS   │  │  │  │   OS   │  │              │
+│  │  └────────┘  │  │  └────────┘  │  │  └────────┘  │              │
+│  └──────────────┘  └──────────────┘  └──────────────┘              │
+│         │                 │                 │                       │
+│         └─────────────────┼─────────────────┘                       │
+│                           │                                         │
+│                   ┌───────▼───────┐                                 │
+│                   │  Hypervisor   │                                 │
+│                   └───────┬───────┘                                 │
+│                           │                                         │
+│                   ┌───────▼───────┐                                 │
+│                   │  Host OS      │                                 │
+│                   └───────┬───────┘                                 │
+│                           │                                         │
+│                   ┌───────▼───────┐                                 │
+│                   │  Hardware     │                                 │
+│                   └───────────────┘                                 │
+│                                                                       │
+│  Heavy: Each VM includes full OS (GBs)                               │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                         CONTAINERS                                    │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                        CONTAINER RUNTIME                         │ │
+│  │                         (Docker, containerd)                     │ │
+│  ├─────────────────────────────────────────────────────────────────┤ │
+│  │                                                                   │ │
+│  │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │ │
+│  │  │ Container 1  │  │ Container 2  │  │ Container 3  │          │ │
+│  │  │  ┌────────┐  │  │  ┌────────┐  │  │  ┌────────┐  │          │ │
+│  │  │  │  App   │  │  │  │  App   │  │  │  │  App   │  │          │ │
+│  │  │  ├────────┤  │  │  ├────────┤  │  │  ├────────┤  │          │ │
+│  │  │  │ Bins/  │  │  │  │ Bins/  │  │  │  │ Bins/  │  │          │ │
+│  │  │  │ Libs   │  │  │  │ Libs   │  │  │  │ Libs   │  │          │ │
+│  │  │  └────────┘  │  │  └────────┘  │  │  └────────┘  │          │ │
+│  │  └──────────────┘  └──────────────┘  └──────────────┘          │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                            ┌───────▼───────┐                         │
+│                            │  Host OS      │                         │
+│                            └───────┬───────┘                         │
+│                                    │                                 │
+│                            ┌───────▼───────┐                         │
+│                            │  Hardware     │                         │
+│                            └───────────────┘                         │
+│                                                                       │
+│  Lightweight: Containers share host OS (MBs)                         │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Comparison Table**
+
+| Aspect | Virtual Machines | Containers |
+|--------|-----------------|------------|
+| **Size** | GBs (full OS) | MBs (only app + dependencies) |
+| **Startup time** | Minutes | Seconds |
+| **Resource utilization** | Heavy | Lightweight |
+| **Isolation** | Strong (separate OS) | Moderate (shared kernel) |
+| **Portability** | Moderate | High |
+| **OS requirement** | Any OS per VM | Same OS kernel |
+| **Use case** | Legacy apps, different OS needs | Microservices, cloud-native |
+
+**Docker Basics**
+
+**What is Docker?** A platform for developing, shipping, and running applications in containers.
+
+**Key Components:**
+
+1. **Dockerfile:** Instructions to build an image
+2. **Image:** Blueprint for a container (read-only)
+3. **Container:** Running instance of an image
+4. **Registry:** Stores images (Docker Hub)
+
+**Example Dockerfile:**
+
+```dockerfile
+# Use official Python image
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements and install
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# Copy application code
+COPY . .
+
+# Expose port
+EXPOSE 8080
+
+# Run the application
+CMD ["python", "app.py"]
+```
+
+**Common Docker Commands:**
+
+```bash
+docker build -t myapp:latest .     # Build image
+docker run -p 8080:8080 myapp      # Run container
+docker ps                          # List running containers
+docker stop <container_id>         # Stop container
+docker rm <container_id>           # Remove container
+docker images                      # List images
+docker push myapp:latest           # Push to registry
+```
+
+---
+
+[Page 7]
+
+## Chapter 5: Networking Basics
+
+**IP Address (Internet Protocol)**
+
+A unique identifier for a device on a network.
+
+- **IPv4:** 32-bit (e.g., 192.168.1.1)
+- **IPv6:** 128-bit (e.g., 2001:0db8:85a3:0000:0000:8a2e:0370:7334)
+
+**Public vs Private IPs:**
+
+| Type | Description | Example | Use |
+|------|-------------|---------|-----|
+| Public | Routable on internet | 54.123.45.67 | Web servers, API endpoints |
+| Private | Internal only | 10.0.0.1, 172.16.0.1, 192.168.1.1 | Internal services, databases |
+
+---
+
+**DNS (Domain Name System)**
+
+Translates domain names (google.com) to IP addresses (142.250.190.46).
+
+**How DNS Works:**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         DNS RESOLUTION                               │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌──────────┐                                                       │
+│  │  User    │  "www.google.com"                                     │
+│  │  Browser ├───────────────────────────────────────────────┐       │
+│  └──────────┘                                               │       │
+│                                                             │       │
+│                                                             ▼       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │  Step 1: Check local cache                                      │ │
+│  │  Step 2: Query DNS resolver (ISP)                               │ │
+│  │  Step 3: Query Root DNS servers                                 │ │
+│  │  Step 4: Query TLD DNS servers (.com)                           │ │
+│  │  Step 5: Query Authoritative DNS servers (google.com)           │ │
+│  │  Step 6: Return IP address (142.250.190.46)                     │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                             │       │
+│                                                             ▼       │
+│  ┌──────────┐                                                       │
+│  │  Browser │◀────────────── IP: 142.250.190.46 ───────────┐       │
+│  └──────────┘                                               │       │
+│                                                             │       │
+│                                                             ▼       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │  Browser connects to 142.250.190.46:80                          │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+**Load Balancing**
+
+Distributes incoming traffic across multiple servers.
+
+**Diagram: Load Balancer**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         LOAD BALANCER                                │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         CLIENTS                                   │ │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐       │ │
+│  │  │ Client 1 │  │ Client 2 │  │ Client 3 │  │ Client 4 │       │ │
+│  │  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘       │ │
+│  │       │             │             │             │              │ │
+│  └───────┼─────────────┼─────────────┼─────────────┼──────────────┘ │
+│          │             │             │             │                │
+│          └─────────────┼─────────────┼─────────────┘                │
+│                        │             │                              │
+│                        ▼             ▼                              │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                       LOAD BALANCER                              │ │
+│  │                                                                   │ │
+│  │  Algorithm: Round Robin / Least Connections / IP Hash           │ │
+│  │  Health Checks: Active / Passive                                │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│          ┌─────────────────────────┼─────────────────────────┐       │
+│          │                         │                         │       │
+│          ▼                         ▼                         ▼       │
+│  ┌───────────────┐        ┌───────────────┐        ┌───────────────┐ │
+│  │   Server 1    │        │   Server 2    │        │   Server 3    │ │
+│  │   (Healthy)   │        │   (Healthy)   │        │   (Healthy)   │ │
+│  └───────────────┘        └───────────────┘        └───────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Load Balancing Algorithms:**
+
+| Algorithm | Description | Use Case |
+|-----------|-------------|----------|
+| Round Robin | Rotates through servers | Even load, similar server capacity |
+| Least Connections | Sends to server with fewest connections | Variable request duration |
+| IP Hash | Consistent hashing based on client IP | Session persistence |
+
+---
+
+**VPC (Virtual Private Cloud)**
+
+A logically isolated section of the cloud where you can launch resources in a virtual network.
+
+**Diagram: VPC with Subnets**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                           VPC (10.0.0.0/16)                          │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    PUBLIC SUBNET (10.0.1.0/24)                   │ │
+│  │                                                                   │ │
+│  │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │ │
+│  │  │  Load Balancer  │  │   Web Server    │  │   NAT Gateway   │ │ │
+│  │  │   (Internet)    │  │    (Public)     │  │                 │ │ │
+│  │  └─────────────────┘  └─────────────────┘  └─────────────────┘ │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    │ Traffic between subnets        │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                   PRIVATE SUBNET (10.0.2.0/24)                   │ │
+│  │                                                                   │ │
+│  │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │ │
+│  │  │  App Server     │  │  App Server     │  │  App Server     │ │ │
+│  │  │   (Private)     │  │   (Private)     │  │   (Private)     │ │ │
+│  │  └─────────────────┘  └─────────────────┘  └─────────────────┘ │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                   DATABASE SUBNET (10.0.3.0/24)                  │ │
+│  │                                                                   │ │
+│  │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐ │ │
+│  │  │   Primary DB    │  │   Read Replica  │  │   Backup DB     │ │ │
+│  │  │   (Private)     │  │   (Private)     │  │   (Private)     │ │ │
+│  │  └─────────────────┘  └─────────────────┘  └─────────────────┘ │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  Internet Gateway: Connects VPC to internet                         │
+│  NAT Gateway: Private subnets can access internet (outbound only)   │
+│  Security Groups: Firewall at instance level                        │
+│  NACLs: Firewall at subnet level                                     │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Subnets (Public vs Private)**
+
+| Subnet Type | Internet Access | Use Case |
+|-------------|-----------------|----------|
+| **Public Subnet** | Direct access via Internet Gateway | Load balancers, web servers, bastion hosts |
+| **Private Subnet** | No direct access (via NAT for outbound) | Application servers, databases |
+
+---
+
+[Page 8]
+
+## Chapter 6: Storage in Cloud
+
+**Three Types of Cloud Storage**
+
+**Diagram: Storage Types**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     CLOUD STORAGE TYPES                              │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                     OBJECT STORAGE                               │ │
+│  │                                                                   │ │
+│  │  • Stores data as objects (files + metadata)                    │ │
+│  │  • Accessed via API (HTTP/REST)                                 │ │
+│  │  • Use cases: Images, videos, backups, static websites          │ │
+│  │  • Examples: Amazon S3, Google Cloud Storage, Azure Blob        │ │
+│  │                                                                   │ │
+│  │  Unlimited scale, pay per GB, built-in redundancy               │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                     BLOCK STORAGE                                │ │
+│  │                                                                   │ │
+│  │  • Stores data in blocks (like a hard drive)                    │ │
+│  │  • Attached to a single virtual machine                         │ │
+│  │  • Use cases: Databases, boot volumes, high-performance apps    │ │
+│  │  • Examples: Amazon EBS, Azure Managed Disks, GCP Persistent Disk│ │
+│  │                                                                   │ │
+│  │  Low latency, high IOPS, but limited to single instance         │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                     FILE STORAGE                                 │ │
+│  │                                                                   │ │
+│  │  • Stores data in files and folders (like network drive)        │ │
+│  │  • Shared across multiple instances                             │ │
+│  │  • Use cases: Shared content, home directories, logging         │ │
+│  │  • Examples: Amazon EFS, Azure Files, GCP Filestore             │ │
+│  │                                                                   │ │
+│  │  Shared access, POSIX-compliant, but higher latency             │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Comparison Table**
+
+| Aspect | Object Storage | Block Storage | File Storage |
+|--------|---------------|---------------|--------------|
+| **Data format** | Objects (files + metadata) | Blocks (raw storage) | Files and folders |
+| **Access method** | API (HTTP/REST) | Attached to instance | Network share (NFS) |
+| **Shared access** | Yes (via API) | No (single instance) | Yes (multiple instances) |
+| **Performance** | Moderate (API calls) | High (low latency) | Moderate (network) |
+| **Use case** | Images, backups, static sites | Databases, boot volumes | Shared files, home dirs |
+| **Examples** | S3, GCS, Azure Blob | EBS, Persistent Disk | EFS, Azure Files |
+
+---
+
+[Page 9]
+
+# PART THREE: CLOUD ARCHITECTURE
+
+## Chapter 7: High Availability
+
+**What is High Availability?**
+
+High Availability (HA) ensures a system remains operational and accessible even when some components fail. The goal is to minimize downtime.
+
+**Key Metric: Uptime Percentage**
+
+| Availability | Downtime per year | Downtime per month | Downtime per week |
+|--------------|-------------------|--------------------|--------------------|
+| 99% (2 nines) | 3.65 days | 7.2 hours | 1.68 hours |
+| 99.9% (3 nines) | 8.76 hours | 43.2 minutes | 10.1 minutes |
+| 99.99% (4 nines) | 52.56 minutes | 4.32 minutes | 1.01 minutes |
+| 99.999% (5 nines) | 5.26 minutes | 25.9 seconds | 6 seconds |
+
+**Diagram: Multi-Zone High Availability**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     HIGH AVAILABILITY ARCHITECTURE                   │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                       LOAD BALANCER                               │ │
+│  │                 (Distributes traffic across zones)               │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│          ┌─────────────────────────┼─────────────────────────┐       │
+│          │                         │                         │       │
+│          ▼                         ▼                         ▼       │
+│  ┌─────────────────────┐  ┌─────────────────────┐  ┌─────────────────┐│
+│  │    ZONE A           │  │    ZONE B           │  │    ZONE C       ││
+│  │  (Availability Zone)│  │  (Availability Zone)│  │(Availability Zone)││
+│  │                     │  │                     │  │                 ││
+│  │  ┌───────────────┐  │  │  ┌───────────────┐  │  │ ┌─────────────┐ ││
+│  │  │ Web Server 1  │  │  │  │ Web Server 2  │  │  │ │ Web Server 3│ ││
+│  │  └───────────────┘  │  │  └───────────────┘  │  │ └─────────────┘ ││
+│  │  ┌───────────────┐  │  │  ┌───────────────┐  │  │ ┌─────────────┐ ││
+│  │  │ App Server 1  │  │  │  │ App Server 2  │  │  │ │ App Server 3│ ││
+│  │  └───────────────┘  │  │  └───────────────┘  │  │ └─────────────┘ ││
+│  │  ┌───────────────┐  │  │  ┌───────────────┐  │  │ ┌─────────────┐ ││
+│  │  │ Database 1    │  │  │  │ Database 2    │  │  │ │ Database 3  │ ││
+│  │  │ (Primary)     │  │  │  │ (Standby)     │  │  │ │ (Standby)   │ ││
+│  │  └───────────────┘  │  │  └───────────────┘  │  │ └─────────────┘ ││
+│  └─────────────────────┘  └─────────────────────┘  └─────────────────┘│
+│                                                                       │
+│  Benefits:                                                            │
+│  • If one AZ fails, traffic routes to other AZs                      │
+│  • Zero downtime during AZ failures                                  │
+│  • Automatic failover for database (multi-AZ)                        │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Key High Availability Patterns**
+
+1. **Load Balancing:** Distribute traffic across multiple instances
+2. **Redundancy:** Multiple instances of each component
+3. **Health Checks:** Detect failed instances
+4. **Auto-Failover:** Automatic recovery when failures detected
+5. **Multi-Zone Deployment:** Spread across availability zones
+
+**Failover Systems**
+
+**Active-Passive:** One active instance, one standby (waiting)
+
+**Active-Active:** Multiple active instances, all serving traffic
+
+---
+
+[Page 10]
+
+## Chapter 8: Scalability
+
+**What is Scalability?**
+
+Scalability is the ability to handle increased load by adding resources.
+
+**Types of Scaling**
+
+**Diagram: Vertical vs Horizontal Scaling**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                  VERTICAL vs HORIZONTAL SCALING                      │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  VERTICAL SCALING (Scale Up)                                         │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                                                                   │ │
+│  │  BEFORE:                    AFTER:                               │ │
+│  │  ┌──────────────┐           ┌──────────────┐                    │ │
+│  │  │  2 vCPU      │           │  8 vCPU      │                    │ │
+│  │  │  4 GB RAM    │  ──────▶  │  16 GB RAM   │                    │ │
+│  │  │  100 GB Disk │           │  500 GB Disk │                    │ │
+│  │  └──────────────┘           └──────────────┘                    │ │
+│  │                                                                   │ │
+│  │  Add more power to existing server                               │ │
+│  │  Limit: Single server capacity                                   │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  HORIZONTAL SCALING (Scale Out)                                      │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                                                                   │ │
+│  │  BEFORE:                    AFTER:                               │ │
+│  │  ┌──────────────┐           ┌──────────────┐ ┌──────────────┐   │ │
+│  │  │ Server 1     │           │ Server 1     │ │ Server 2     │   │ │
+│  │  └──────────────┘           └──────────────┘ └──────────────┘   │ │
+│  │                                 ┌──────────────┐                 │ │
+│  │                                 │ Server 3     │                 │ │
+│  │                                 └──────────────┘                 │ │
+│  │                                                                   │ │
+│  │  Add more servers                                                │ │
+│  │  Limit: None (theoretically infinite)                            │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Comparison**
+
+| Aspect | Vertical Scaling | Horizontal Scaling |
+|--------|------------------|--------------------|
+| **How** | Upgrade existing server | Add more servers |
+| **Limit** | Single server max capacity | Theoretically unlimited |
+| **Complexity** | Simple | Complex (needs load balancer) |
+| **Downtime** | Usually requires downtime | No downtime |
+| **Cost** | Expensive at high end | Linear cost per server |
+| **Use case** | Databases, legacy apps | Modern cloud apps |
+
+**Auto-Scaling**
+
+Automatically adjusts number of instances based on demand.
+
+**Diagram: Auto-Scaling**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         AUTO-SCALING                                 │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  Request Rate                                                        │
+│     ▲                                                                │
+│     │                    ┌─────────────────────┐                    │
+│     │                    │                     │                    │
+│     │        ┌───────────┘                     └───────────┐        │
+│     │        │                                             │        │
+│     │   ┌────┘                                             └────┐   │
+│     │   │                                                   │   │   │
+│     └───┴───────────────────────────────────────────────────┴───┴──▶ Time
+│                                                                       │
+│  Number of Instances                                                │
+│     ▲                                                                │
+│     │                    ┌─────────────────────┐                    │
+│     │                    │  5 instances        │                    │
+│     │        ┌───────────┘                     └───────────┐        │
+│     │        │  3 instances                                 │        │
+│     │   ┌────┘                                             └────┐   │
+│     │   │  1 instance                                         │   │   │
+│     └───┴───────────────────────────────────────────────────┴───┴──▶ Time
+│                                                                       │
+│  Scaling Policies:                                                   │
+│  • Scale out when CPU > 70% for 5 minutes                           │
+│  • Scale in when CPU < 30% for 10 minutes                           │
+│  • Schedule scaling for peak hours (e.g., 9 AM - 6 PM)              │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+[Page 11]
+
+## Chapter 9: Fault Tolerance
+
+**What is Fault Tolerance?**
+
+Fault tolerance is the ability of a system to continue operating properly even when some components fail.
+
+**Fault Tolerance vs High Availability**
+
+| Aspect | High Availability | Fault Tolerance |
+|--------|-------------------|-----------------|
+| **Goal** | Minimize downtime | Zero downtime |
+| **Failure recovery** | Seconds to minutes | Instant (no interruption) |
+| **Cost** | Moderate | High |
+| **Complexity** | Moderate | High |
+| **Example** | Load balancer + multiple servers | Redundant components with failover |
+
+**Diagram: Fault Tolerance Strategies**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     FAULT TOLERANCE STRATEGIES                       │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  1. REDUNDANCY                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                                                                   │ │
+│  │  ┌──────────┐    ┌──────────┐    ┌──────────┐                  │ │
+│  │  │ Server A │    │ Server B │    │ Server C │                  │ │
+│  │  │ Active   │    │ Active   │    │ Active   │                  │ │
+│  │  └──────────┘    └──────────┘    └──────────┘                  │ │
+│  │                                                                   │ │
+│  │  Load balancer distributes traffic                               │ │
+│  │  If one fails, others continue                                   │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  2. REPLICATION                                                      │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                                                                   │ │
+│  │  ┌──────────┐    Async/Sync    ┌──────────┐                    │ │
+│  │  │ Primary  │ ──────────────▶ │ Replica  │                    │ │
+│  │  │ Database │                  │ Database │                    │ │
+│  │  └──────────┘                  └──────────┘                    │ │
+│  │                                                                   │ │
+│  │  Data copied to replica(s)                                       │ │
+│  │  If primary fails, replica becomes primary                       │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  3. CHECKPOINTING & BACKUP                                           │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                                                                   │ │
+│  │  ┌──────────┐    Periodic     ┌──────────┐                     │ │
+│  │  │ Service  │ ──────────────▶ │ Backup   │                     │ │
+│  │  │ State    │                  │ Storage  │                     │ │
+│  │  └──────────┘                  └──────────┘                     │ │
+│  │                                                                   │ │
+│  │  Regular backups of state                                        │ │
+│  │  Restore from last checkpoint on failure                         │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Backup Strategies**
+
+| Strategy | Description | RPO (Recovery Point Objective) | RTO (Recovery Time Objective) |
+|----------|-------------|-------------------------------|------------------------------|
+| Daily backups | Back up once per day | Up to 24 hours | Hours |
+| Hourly backups | Back up every hour | Up to 1 hour | 30-60 minutes |
+| Continuous | Real-time replication | Seconds | Minutes |
+| 3-2-1 Rule | 3 copies, 2 media types, 1 offsite | Varies | Varies |
+
+---
+
+[Page 12]
+
+# PART FOUR: ADVANCED CONCEPTS
+
+## Chapter 10: Microservices Architecture
+
+**Monolith vs Microservices**
+
+**Diagram: Monolith vs Microservices**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         MONOLITH                                      │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    SINGLE APPLICATION                            │ │
+│  │                                                                   │ │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐       │ │
+│  │  │   User   │  │  Order   │  │ Product  │  │ Payment  │       │ │
+│  │  │  Module  │  │  Module  │  │  Module  │  │  Module  │       │ │
+│  │  └──────────┘  └──────────┘  └──────────┘  └──────────┘       │ │
+│  │                                                                   │ │
+│  │  ┌─────────────────────────────────────────────────────────────┐│ │
+│  │  │                     Shared Database                          ││ │
+│  │  └─────────────────────────────────────────────────────────────┘│ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  One codebase, one deployment, one database                          │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                       MICROSERVICES                                   │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐           │
+│  │   User        │  │   Order       │  │   Product     │           │
+│  │   Service     │  │   Service     │  │   Service     │           │
+│  ├───────────────┤  ├───────────────┤  ├───────────────┤           │
+│  │ ┌───────────┐ │  │ ┌───────────┐ │  │ ┌───────────┐ │           │
+│  │ │User DB    │ │  │ │Order DB   │ │  │ │Product DB │ │           │
+│  │ └───────────┘ │  │ └───────────┘ │  │ └───────────┘ │           │
+│  └───────┬───────┘  └───────┬───────┘  └───────┬───────┘           │
+│          │                  │                  │                    │
+│          └──────────────────┼──────────────────┘                    │
+│                             │                                       │
+│                     ┌───────▼───────┐                               │
+│                     │   API Gateway  │                               │
+│                     │   (Optional)   │                               │
+│                     └───────┬───────┘                               │
+│                             │                                       │
+│                             ▼                                       │
+│                      ┌───────────────┐                              │
+│                      │   Client      │                              │
+│                      └───────────────┘                              │
+│                                                                       │
+│  Multiple services, each with own database, independent deployment   │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Comparison**
+
+| Aspect | Monolith | Microservices |
+|--------|----------|---------------|
+| **Deployment** | One unit | Independent services |
+| **Scaling** | Scale everything | Scale individual services |
+| **Technology** | Single stack | Polyglot |
+| **Team structure** | Single team | Multiple small teams |
+| **Development** | Simple at start | Complex from start |
+| **Testing** | End-to-end tests | Service tests + integration |
+| **Data** | Shared database | Database per service |
+| **Communication** | In-memory calls | Network calls (REST, gRPC, events) |
+
+**API Communication in Microservices**
+
+Common protocols:
+- **REST (HTTP):** Simple, widely used
+- **gRPC:** High performance, typed contracts
+- **GraphQL:** Flexible queries, client-specified data
+- **Message Queues:** Async communication
+
+---
+
+[Page 13]
+
+## Chapter 11: Event-Driven Systems
+
+**What is Event-Driven Architecture?**
+
+Components communicate by producing and consuming events. Events represent significant state changes.
+
+**Diagram: Event-Driven Architecture**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     EVENT-DRIVEN ARCHITECTURE                        │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         EVENT PRODUCERS                          │ │
+│  │                                                                   │ │
+│  │  ┌──────────┐    ┌──────────┐    ┌──────────┐                  │ │
+│  │  │ Order    │    │ Payment  │    │  User    │                  │ │
+│  │  │ Service  │    │ Service  │    │ Service  │                  │ │
+│  │  └────┬─────┘    └────┬─────┘    └────┬─────┘                  │ │
+│  │       │               │               │                         │ │
+│  └───────┼───────────────┼───────────────┼─────────────────────────┘ │
+│          │               │               │                           │
+│          │ order.created  │ payment.completed │ user.registered      │
+│          ▼               ▼               ▼                           │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         MESSAGE BROKER                           │ │
+│  │                         (Kafka, RabbitMQ)                        │ │
+│  │                                                                   │ │
+│  │  ┌─────────────────────────────────────────────────────────┐   │ │
+│  │  │ order.created │ order.paid │ inventory.reserved │ ...    │   │ │
+│  │  └─────────────────────────────────────────────────────────┘   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│          │               │               │                           │
+│          │ subscribe     │ subscribe     │ subscribe                 │
+│          ▼               ▼               ▼                           │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         EVENT CONSUMERS                          │ │
+│  │                                                                   │ │
+│  │  ┌──────────┐    ┌──────────┐    ┌──────────┐                  │ │
+│  │  │Inventory │    │Shipping  │    │Analytics │                  │ │
+│  │  │ Service  │    │ Service  │    │ Service  │                  │ │
+│  │  └──────────┘    └──────────┘    └──────────┘                  │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Message Queues vs Pub/Sub**
+
+| Aspect | Message Queue | Pub/Sub |
+|--------|---------------|---------|
+| **Pattern** | Point-to-point | Broadcast |
+| **Consumers** | One consumer per message | All subscribers |
+| **Use case** | Work distribution | Event notification |
+| **Example** | RabbitMQ (queue) | Kafka (topics) |
+
+---
+
+[Page 14]
+
+## Chapter 12: Distributed Systems Basics
+
+**CAP Theorem**
+
+A distributed system can only provide two of three guarantees:
+
+- **Consistency (C):** All nodes see same data at same time
+- **Availability (A):** Every request receives a response
+- **Partition Tolerance (P):** System continues despite network partitions
+
+**Diagram: CAP Theorem**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                           CAP THEOREM                                │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│                              ┌─────────┐                             │
+│                              │Consistency│                            │
+│                              │   (C)   │                            │
+│                              └────┬────┘                            │
+│                                   │                                 │
+│                    ┌──────────────┼──────────────┐                  │
+│                    │              │              │                  │
+│                    │              │              │                  │
+│                    ▼              ▼              ▼                  │
+│              ┌─────────┐    ┌─────────┐    ┌─────────┐            │
+│              │   CP    │    │   CA    │    │   AP    │            │
+│              │(ZooKeeper│    │(RDBMS)  │    │(Cassandra)│            │
+│              │ etcd)   │    │         │    │DynamoDB)│            │
+│              └─────────┘    └─────────┘    └─────────┘            │
+│                    │              │              │                  │
+│                    │              │              │                  │
+│                    └──────────────┼──────────────┘                  │
+│                                   │                                 │
+│                              ┌────┴────┐                           │
+│                              │Availability│                          │
+│                              │   (A)   │                           │
+│                              └─────────┘                           │
+│                                                                       │
+│  CP: Consistency + Partition Tolerance (banking)                    │
+│  AP: Availability + Partition Tolerance (social media)              │
+│  CA: Consistency + Availability (single-node, not distributed)      │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Consistency Models**
+
+| Model | Description | Example |
+|-------|-------------|---------|
+| Strong Consistency | All reads see latest write | Relational DB |
+| Eventual Consistency | Reads may see stale data | DNS, Cassandra |
+| Causal Consistency | Related operations ordered | Some NoSQL |
+| Read Your Writes | User sees their own writes | Session consistency |
+
+---
+
+[Page 15]
+
+# PART FIVE: DEVOPS IN CLOUD
+
+## Chapter 13: CI/CD Pipelines
+
+**What is CI/CD?**
+
+- **CI (Continuous Integration):** Automatically build and test code changes
+- **CD (Continuous Delivery/Deployment):** Automatically deploy to environments
+
+**Diagram: CI/CD Pipeline**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                          CI/CD PIPELINE                              │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌──────────┐                                                       │
+│  │ Developer│                                                       │
+│  │  pushes  │                                                       │
+│  │   code   │                                                       │
+│  └────┬─────┘                                                       │
+│       │                                                             │
+│       ▼                                                             │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    1. SOURCE CONTROL                             │ │
+│  │                         (GitHub, GitLab)                         │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    2. BUILD & TEST                               │ │
+│  │                                                                   │ │
+│  │  • Checkout code                                                 │ │
+│  │  • Install dependencies                                          │ │
+│  │  • Run unit tests                                                │ │
+│  │  • Run linting                                                   │ │
+│  │  • Build artifact (JAR, Docker image)                           │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    3. STORE ARTIFACT                             │ │
+│  │                    (Artifactory, ECR, Docker Hub)                │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    4. DEPLOY TO DEV                              │ │
+│  │                                                                   │ │
+│  │  • Run integration tests                                         │ │
+│  │  • Run smoke tests                                               │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    5. DEPLOY TO STAGING                          │ │
+│  │                                                                   │ │
+│  │  • Run end-to-end tests                                          │ │
+│  │  • Performance tests                                             │ │
+│  │  • Security scans                                                │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    6. DEPLOY TO PRODUCTION                        │ │
+│  │                                                                   │ │
+│  │  • Blue-green or canary deployment                               │ │
+│  │  • Smoke tests after deployment                                  │ │
+│  │  • Monitoring & alerts                                           │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+[Page 16]
+
+## Chapter 14: Infrastructure as Code (IaC)
+
+**What is IaC?**
+
+Managing and provisioning infrastructure through code instead of manual processes.
+
+**Diagram: IaC Workflow**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     INFRASTRUCTURE AS CODE                           │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌──────────┐      ┌──────────┐      ┌──────────┐                  │
+│  │ Write    │      │ Version  │      │ Apply    │                  │
+│  │ Code     │ ───▶ │ Control  │ ───▶ │ Changes  │                  │
+│  │ (Terraform│     │ (Git)    │      │ (Plan)   │                  │
+│  │ CloudForm)│     └──────────┘      └────┬─────┘                  │
+│  └──────────┘                             │                         │
+│                                           │                         │
+│                                           ▼                         │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                        INFRASTRUCTURE                            │ │
+│  │                                                                   │ │
+│  │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐       │ │
+│  │  │  VPC     │  │  EC2     │  │  S3      │  │  RDS     │       │ │
+│  │  └──────────┘  └──────────┘  └──────────┘  └──────────┘       │ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  Benefits:                                                            │
+│  • Repeatable infrastructure                                         │
+│  • Version-controlled infrastructure                                 │
+│  • Automated provisioning                                            │
+│  • Consistency across environments                                   │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**IaC Tools Overview**
+
+| Tool | Type | Language | Best for |
+|------|------|----------|----------|
+| **Terraform** | Multi-cloud | HCL | Multi-cloud, complex infra |
+| **AWS CloudFormation** | AWS-specific | JSON/YAML | AWS-only infrastructure |
+| **Pulumi** | Multi-cloud | TypeScript, Python, Go | Developer-friendly |
+| **Ansible** | Configuration | YAML | Configuration management |
+| **CDK** | AWS-specific | TypeScript, Python, Java | Developer-friendly AWS |
+
+---
+
+[Page 15]
+
+## Chapter 15: Monitoring & Logging
+
+**The Three Pillars of Observability**
+
+**Diagram: Observability Pillars**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    THREE PILLARS OF OBSERVABILITY                    │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                          METRICS                                  │ │
+│  │                                                                   │ │
+│  │  • Numerical measurements over time                             │ │
+│  │  • Examples: CPU usage, request rate, error rate, latency       │ │
+│  │  • Tools: Prometheus, Datadog, CloudWatch                       │ │
+│  │  • Use: Dashboards, alerts, capacity planning                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                           LOGS                                    │ │
+│  │                                                                   │ │
+│  │  • Text records of events                                        │ │
+│  │  • Examples: Error messages, access logs, debug output          │ │
+│  │  • Tools: ELK Stack, Splunk, CloudWatch Logs                    │ │
+│  │  • Use: Debugging, auditing, troubleshooting                    │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                          TRACES                                   │ │
+│  │                                                                   │ │
+│  │  • Track request flow across services                           │ │
+│  │  • Examples: Request path, latency per service                  │ │
+│  │  • Tools: Jaeger, Zipkin, X-Ray                                 │ │
+│  │  • Use: Distributed debugging, performance analysis              │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Key Metrics (The Four Golden Signals)**
+
+1. **Latency:** Time to serve a request
+2. **Traffic:** How much demand on system
+3. **Errors:** Rate of failed requests
+4. **Saturation:** How "full" the system is
+
+**Alerts Flow**
+
+```
+Metric threshold crossed ──▶ Alert triggered ──▶ Notification sent ──▶ Engineer investigates
+```
+
+---
+
+[Page 16]
+
+# PART SIX: SECURITY
+
+## Chapter 16: Identity & Access Management (IAM)
+
+**What is IAM?**
+
+Managing who can access what resources.
+
+**Diagram: IAM Concepts**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                             IAM                                      │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                          USER                                    │ │
+│  │                    (Individual person)                           │ │
+│  │                   Example: alice@company.com                     │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                          GROUP                                   │ │
+│  │                  (Collection of users)                           │ │
+│  │                 Example: developers, admins                      │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                          ROLE                                    │ │
+│  │              (Assumed by users or services)                      │ │
+│  │                 Example: EC2ReadOnly, S3FullAccess              │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         POLICY                                   │ │
+│  │              (Defines permissions - JSON document)               │ │
+│  │                                                                   │ │
+│  │  {                                                              │ │
+│  │    "Effect": "Allow",                                           │ │
+│  │    "Action": "s3:GetObject",                                    │ │
+│  │    "Resource": "arn:aws:s3:::my-bucket/*"                       │ │
+│  │  }                                                              │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  Principle of Least Privilege: Give minimum permissions required     │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+[Page 17]
+
+## Chapter 17: Network Security
+
+**Security Groups vs Network ACLs (NACLs)**
+
+| Aspect | Security Groups | NACLs |
+|--------|----------------|-------|
+| **Level** | Instance level | Subnet level |
+| **State** | Stateful (return traffic allowed) | Stateless (rules for both directions) |
+| **Rules** | Only Allow rules | Allow and Deny rules |
+| **Order** | All rules evaluated | Rules evaluated in order |
+
+**Diagram: Network Security Layers**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                     NETWORK SECURITY LAYERS                          │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│                         INTERNET                                     │
+│                            │                                         │
+│                            │                                         │
+│                            ▼                                         │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    WEB APPLICATION FIREWALL                      │ │
+│  │                  (Protects against SQL injection, XSS)           │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                            │                                         │
+│                            ▼                                         │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         VPC                                       │ │
+│  │                                                                   │ │
+│  │  ┌─────────────────────────────────────────────────────────────┐│ │
+│  │  │                     NETWORK ACL (NACL)                       ││ │
+│  │  │                  (Subnet-level firewall)                    ││ │
+│  │  └─────────────────────────────────────────────────────────────┘│ │
+│  │                                                                   │ │
+│  │  ┌─────────────────────────────────────────────────────────────┐│ │
+│  │  │                   SECURITY GROUPS                             ││ │
+│  │  │                 (Instance-level firewall)                    ││ │
+│  │  └─────────────────────────────────────────────────────────────┘│ │
+│  │                                                                   │ │
+│  │  ┌─────────────────────────────────────────────────────────────┐│ │
+│  │  │                    INSTANCE                                   ││ │
+│  │  └─────────────────────────────────────────────────────────────┘│ │
+│  │                                                                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+[Page 18]
+
+# PART SEVEN: REAL-WORLD SYSTEM DESIGN
+
+## Chapter 18: Design Scenarios
+
+**Scenario 1: URL Shortener (e.g., bit.ly)**
+
+**Requirements:**
+- Convert long URL to short code (e.g., bit.ly/abc123)
+- Redirect to original URL when short URL is accessed
+- Handle millions of URLs
+
+**Diagram: URL Shortener**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         URL SHORTENER                                │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  CREATE SHORT URL                                                    │
+│  ┌──────────┐      ┌──────────┐      ┌──────────┐                  │
+│  │  User    │ ───▶ │  API     │ ───▶ │ Generate │                  │
+│  │          │      │ Gateway  │      │ Short ID │                  │
+│  └──────────┘      └──────────┘      └────┬─────┘                  │
+│                                            │                         │
+│                                            ▼                         │
+│                                     ┌──────────┐                    │
+│                                     │ Database │                    │
+│                                     │ (URL map)│                    │
+│                                     └──────────┘                    │
+│                                                                       │
+│  REDIRECT                                                            │
+│  ┌──────────┐      ┌──────────┐      ┌──────────┐                  │
+│  │  User    │ ───▶ │  Load    │ ───▶ │ Lookup   │                  │
+│  │  clicks  │      │ Balancer │      │ Short ID │                  │
+│  └──────────┘      └──────────┘      └────┬─────┘                  │
+│                                            │                         │
+│                                            ▼                         │
+│                                     ┌──────────┐                    │
+│                                     │ 307 Redirect│                  │
+│                                     └──────────┘                    │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Key Design Decisions:**
+- Use base62 encoding for short IDs
+- Cache frequently accessed URLs (Redis)
+- Use database for persistence (PostgreSQL)
+- Pre-generate IDs to avoid collisions
+
+---
+
+**Scenario 2: Netflix-like System**
+
+**Requirements:**
+- Stream video to millions of users
+- Personalized recommendations
+- User authentication
+- Watch history
+
+**Diagram: Netflix Architecture**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                      NETFLIX ARCHITECTURE                            │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         CDN                                       │ │
+│  │                    (Video content)                               │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    │                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         USER                                      │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                      API GATEWAY                                 │ │
+│  │                 (Authentication, routing)                        │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│          ┌─────────────────────────┼─────────────────────────┐       │
+│          │                         │                         │       │
+│          ▼                         ▼                         ▼       │
+│  ┌───────────────┐        ┌───────────────┐        ┌───────────────┐ │
+│  │   User        │        │   Catalog     │        │  Recommendation│ │
+│  │   Service     │        │   Service     │        │   Service     │ │
+│  └───────────────┘        └───────────────┘        └───────────────┘ │
+│                                                                       │
+│  ┌───────────────┐        ┌───────────────┐        ┌───────────────┐ │
+│  │   Playback    │        │   History     │        │   Rating      │ │
+│  │   Service     │        │   Service     │        │   Service     │ │
+│  └───────────────┘        └───────────────┘        └───────────────┘ │
+│                                                                       │
+│  Databases: Cassandra (write-heavy), Elasticsearch (search),         │
+│              Redis (cache), S3 (video storage)                       │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+**Scenario 3: Chat System (e.g., WhatsApp, Slack)**
+
+**Requirements:**
+- Real-time messaging
+- One-to-one and group chats
+- Message delivery status
+- Online/offline status
+
+**Diagram: Chat System**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         CHAT SYSTEM                                  │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         CLIENT 1                                  │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    │ WebSocket connection           │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    WEBSOCKET SERVER                              │ │
+│  │              (Maintains persistent connections)                  │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    │ Message                        │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                     MESSAGE QUEUE                                 │ │
+│  │                   (Kafka for message ordering)                   │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    │ Deliver                        │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                    WEBSOCKET SERVER                              │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    │ WebSocket connection           │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         CLIENT 2                                  │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  Additional components:                                              │
+│  • Database for message persistence (Cassandra)                     │
+│  • Cache for user status (Redis)                                    │
+│  • Load balancer for WebSocket servers                              │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+[Page 19]
+
+# BOOK 1: CONCLUSION
+
+**Key Takeaways**
+
+1. **Cloud is about renting, not owning:** Pay for what you use, scale as needed.
+
+2. **Three service models:** IaaS (control), PaaS (platform), SaaS (software).
+
+3. **Virtualization enables cloud:** VMs and containers are fundamental.
+
+4. **Design for failure:** Use redundancy, load balancing, auto-scaling.
+
+5. **CAP theorem guides choices:** Choose consistency or availability based on needs.
+
+6. **Observability is essential:** Metrics, logs, traces help understand systems.
+
+7. **Security is layered:** IAM, security groups, VPCs work together.
+
+---
+
+[Page 20]
+
+# BOOK 2: AWS FOR DEVELOPER & DEVOPS ENGINEER
+## Complete Guide with Real Scenarios and Tool Comparisons
+
+---
+
+### About This Book
+
+Dear Reader,
+
+This book focuses on AWS services that developers and DevOps engineers use daily. Each service includes:
+- **What it is** (simple explanation)
+- **Real scenario** (practical example)
+- **When to use** (decision guidance)
+- **Without cloud alternative** (traditional approach)
+- **Comparison** (related AWS services)
+- **Advantages & disadvantages**
+
+Let's dive into AWS!
+
+---
+
+[Page 21]
+
+# TABLE OF CONTENTS
+
+**PART ONE: AWS BASICS**
+- Chapter 1: What is AWS (Regions, AZs, Global Infrastructure)
+
+**PART TWO: COMPUTE SERVICES**
+- Chapter 2: EC2 (Virtual Servers)
+- Chapter 3: Lambda (Serverless Functions)
+
+**PART THREE: STORAGE SERVICES**
+- Chapter 4: S3 (Object Storage)
+- Chapter 5: EBS vs EFS (Block vs File Storage)
+
+**PART FOUR: NETWORKING SERVICES**
+- Chapter 6: VPC (Virtual Private Cloud)
+- Chapter 7: Load Balancer (ALB vs NLB)
+
+**PART FIVE: DATABASE SERVICES**
+- Chapter 8: RDS (SQL Databases)
+- Chapter 9: DynamoDB (NoSQL Database)
+
+**PART SIX: DEVOPS TOOLS**
+- Chapter 10: CI/CD (CodePipeline, CodeBuild, CodeDeploy)
+- Chapter 11: Container Services (ECS, EKS)
+
+**PART SEVEN: MONITORING**
+- Chapter 12: CloudWatch (Logs, Metrics, Alarms)
+
+**PART EIGHT: SECURITY**
+- Chapter 13: IAM (Users, Roles, Policies)
+
+**PART NINE: REAL SCENARIOS**
+- Chapter 14: Deploying a Web App on AWS
+
+**PART TEN: TOOL COMPARISONS (IMPORTANT)**
+- Chapter 15: EC2 vs Lambda vs ECS
+- Chapter 16: S3 vs EBS vs EFS
+- Chapter 17: RDS vs DynamoDB
+- Chapter 18: ALB vs NLB
+
+**PART ELEVEN: INTERVIEW PREPARATION**
+- Chapter 19: Common AWS Interview Questions
+- Chapter 20: System Design with AWS
+
+---
+
+[Page 22]
+
+# PART ONE: AWS BASICS
+
+## Chapter 1: What is AWS
+
+**AWS (Amazon Web Services)** is a cloud platform offering over 200 services for compute, storage, databases, networking, and more.
+
+**Global Infrastructure**
+
+**Diagram: AWS Global Infrastructure**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    AWS GLOBAL INFRASTRUCTURE                         │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         REGION                                    │ │
+│  │                    (e.g., us-east-1 - Virginia)                  │ │
+│  │                                                                   │ │
+│  │  ┌─────────────────────┐  ┌─────────────────────┐               │ │
+│  │  │   Availability Zone  │  │   Availability Zone  │               │ │
+│  │  │         A           │  │         B           │               │ │
+│  │  │                     │  │                     │               │ │
+│  │  │  ┌────┐ ┌────┐     │  │  ┌────┐ ┌────┐     │               │ │
+│  │  │  │EC2 │ │S3  │     │  │  │EC2 │ │RDS │     │               │ │
+│  │  │  └────┘ └────┘     │  │  └────┘ └────┘     │               │ │
+│  │  └─────────────────────┘  └─────────────────────┘               │ │
+│  │                                                                   │ │
+│  │  ┌─────────────────────┐                                         │ │
+│  │  │   Availability Zone  │                                         │ │
+│  │  │         C           │                                         │ │
+│  │  └─────────────────────┘                                         │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  Edge Locations: 400+ globally for CDN (CloudFront)                  │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Key Concepts**
+
+| Concept | Description | Example |
+|---------|-------------|---------|
+| **Region** | Geographic area (e.g., us-east-1) | Virginia, Oregon, Ireland, Tokyo |
+| **Availability Zone (AZ)** | One or more data centers in a region | us-east-1a, us-east-1b |
+| **Edge Location** | CDN endpoint for content delivery | 400+ worldwide |
+
+**Why Regions Matter:**
+- **Latency:** Choose region close to users
+- **Compliance:** Data residency requirements
+- **Cost:** Prices vary by region
+- **Service Availability:** Not all services in all regions
+
+---
+
+[Page 23]
+
+# PART TWO: COMPUTE SERVICES
+
+## Chapter 2: EC2 (Elastic Compute Cloud)
+
+**What is EC2?**
+
+Virtual servers in the cloud. You rent compute capacity (CPU, RAM, disk).
+
+**Real Scenario**
+
+Your startup needs to host a Node.js backend API. You expect traffic to grow over time.
+
+**Without Cloud (Alternative):**
+- Buy physical servers ($5,000+ upfront)
+- Set up in a data center
+- Wait weeks for delivery
+- Manage hardware yourself
+- Over-provision for peak or risk downtime
+
+**With EC2:**
+- Launch a t3.micro instance (1 vCPU, 1 GB RAM) for ~$8/month
+- Scale up to larger instances as needed
+- Pay only for what you use
+
+**When to Use EC2**
+
+- Need full control over OS and software
+- Lift-and-shift existing applications
+- Long-running workloads (24/7)
+- Applications with specific OS requirements
+- Need custom AMIs (Amazon Machine Images)
+
+**EC2 vs Other AWS Compute**
+
+| Service | Best for |
+|---------|----------|
+| **EC2** | Full control, long-running, custom apps |
+| **Lambda** | Event-driven, short-running, serverless |
+| **ECS/EKS** | Containers, microservices |
+
+**Advantages**
+
+- Full control over OS and software
+- Wide variety of instance types (compute, memory, GPU optimized)
+- Integration with other AWS services
+- Auto-scaling capabilities
+- Spot instances for cost savings (up to 90% off)
+
+**Disadvantages**
+
+- You manage OS updates, security patches
+- Pay for idle time (if not optimized)
+- More operational overhead than serverless
+
+---
+
+## Chapter 3: Lambda
+
+**What is Lambda?**
+
+Run code without provisioning or managing servers. Pay only for compute time when your code runs.
+
+**Real Scenario**
+
+You need to resize images whenever a user uploads to S3.
+
+**Without Cloud (Alternative):**
+- Run a server 24/7 waiting for uploads
+- Waste resources when no uploads happen
+- Manage scaling during traffic spikes
+
+**With Lambda:**
+- Function triggers on S3 upload event
+- Runs only when images are uploaded
+- Scales automatically (thousands of concurrent executions)
+- Pay only for milliseconds of execution time
+
+**Diagram: Lambda Flow**
+
+```
+┌──────────┐     ┌──────────┐     ┌──────────┐
+│  User    │ ──▶ │   S3     │ ──▶ │  Lambda  │
+│  uploads │     │  upload  │     │  resize  │
+│  image   │     │  event   │     │  image   │
+└──────────┘     └──────────┘     └────┬─────┘
+                                       │
+                                       ▼
+                                  ┌──────────┐
+                                  │   S3     │
+                                  │ resized  │
+                                  │  image   │
+                                  └──────────┘
+```
+
+**When to Use Lambda**
+
+- Event-driven workloads (file processing, notifications)
+- Short-running functions (<15 minutes)
+- Variable or unpredictable traffic
+- API backends (with API Gateway)
+- Scheduled jobs (CloudWatch Events)
+
+**Lambda vs EC2**
+
+| Aspect | Lambda | EC2 |
+|--------|--------|-----|
+| **Server management** | None | You manage |
+| **Scaling** | Automatic | You configure |
+| **Cost** | Per execution | Per hour (even idle) |
+| **Max execution time** | 15 minutes | Unlimited |
+| **State** | Stateless | Can be stateful |
+| **Use case** | Event-driven, microservices | Long-running apps |
+
+**Advantages**
+
+- No server management
+- Automatic scaling
+- Pay per execution (cost-effective for sporadic workloads)
+- Built-in integrations with AWS services
+
+**Disadvantages**
+
+- 15-minute timeout limit
+- Cold starts (first invocation delay)
+- Limited runtime support
+- Not suitable for long-running processes
+
+---
+
+[Page 24]
+
+# PART THREE: STORAGE SERVICES
+
+## Chapter 4: S3 (Simple Storage Service)
+
+**What is S3?**
+
+Object storage for files, images, videos, backups, static websites. Unlimited storage, pay per GB.
+
+**Real Scenario**
+
+Your application needs to store user profile pictures and product images.
+
+**Without Cloud (Alternative):**
+- Set up file servers
+- Manage disk space
+- Implement backup and replication
+- Handle scaling
+
+**With S3:**
+- Create an S3 bucket
+- Upload files via API
+- Automatic replication across AZs
+- 11 nines of durability
+- Pay only for what you store
+
+**S3 Storage Classes**
+
+| Class | Use Case | Durability | Availability |
+|-------|----------|------------|--------------|
+| **S3 Standard** | Frequently accessed data | 99.999999999% | 99.99% |
+| **S3 Intelligent-Tiering** | Unknown access patterns | 99.999999999% | 99.9% |
+| **S3 Standard-IA** | Infrequent access | 99.999999999% | 99.9% |
+| **S3 One Zone-IA** | Recreatable data | 99.999999999% | 99.5% |
+| **S3 Glacier** | Archives (minutes to hours retrieval) | 99.999999999% | — |
+| **S3 Glacier Deep Archive** | Long-term archives (hours retrieval) | 99.999999999% | — |
+
+**When to Use S3**
+
+- Static website hosting
+- File storage and sharing
+- Backups and archives
+- Data lake for analytics
+- Media storage (images, videos)
+
+**S3 vs EBS vs EFS**
+
+| Aspect | S3 | EBS | EFS |
+|--------|-----|-----|-----|
+| **Type** | Object | Block | File |
+| **Access** | API (HTTP) | Attached to EC2 | NFS (shared) |
+| **Shared** | Yes (via API) | No | Yes |
+| **Use case** | Static files, backups | Databases, boot volumes | Shared files |
+
+**Advantages**
+
+- Unlimited storage
+- 99.999999999% durability (11 nines)
+- Versioning support
+- Lifecycle policies
+- Server-side encryption
+- Event notifications (S3 → Lambda)
+
+**Disadvantages**
+
+- Eventual consistency (for overwrites)
+- No file system semantics (can't mount as drive)
+- Request costs (GET, PUT requests cost money)
+
+---
+
+[Page 25]
+
+## Chapter 5: EBS vs EFS
+
+**EBS (Elastic Block Store)**
+
+Block storage for EC2 instances (like a hard drive).
+
+**Real Scenario:** Your database needs high-performance, low-latency storage.
+
+**When to use:** Boot volumes, databases, high-performance workloads.
+
+**EFS (Elastic File System)**
+
+File storage shared across multiple EC2 instances (like network drive).
+
+**Real Scenario:** Multiple web servers need access to shared content files.
+
+**When to use:** Shared content, home directories, logging.
+
+**Comparison**
+
+| Aspect | EBS | EFS |
+|--------|-----|-----|
+| **Access** | Single EC2 instance | Multiple EC2 instances (NFS) |
+| **Performance** | High IOPS, low latency | Moderate |
+| **Use case** | Databases, boot volumes | Shared files, home dirs |
+| **Pricing** | Pay for provisioned capacity | Pay for used storage |
+| **Backup** | Snapshots | Automatic |
+
+---
+
+[Page 26]
+
+# PART FOUR: NETWORKING SERVICES
+
+## Chapter 6: VPC (Virtual Private Cloud)
+
+**What is VPC?**
+
+Logically isolated network in AWS where you launch resources.
+
+**Real Scenario:** Your application needs separate networks for web servers (public) and databases (private).
+
+**Diagram: VPC with Public and Private Subnets**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                           VPC (10.0.0.0/16)                          │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                  PUBLIC SUBNET (10.0.1.0/24)                     │ │
+│  │                                                                   │ │
+│  │  ┌───────────────┐  ┌───────────────┐                           │ │
+│  │  │ Load Balancer │  │  Web Server   │                           │ │
+│  │  │  (Internet)   │  │   (Public)    │                           │ │
+│  │  └───────────────┘  └───────────────┘                           │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                  PRIVATE SUBNET (10.0.2.0/24)                    │ │
+│  │                                                                   │ │
+│  │  ┌───────────────┐  ┌───────────────┐                           │ │
+│  │  │ App Server    │  │ App Server    │                           │ │
+│  │  │  (Private)    │  │  (Private)    │                           │ │
+│  │  └───────────────┘  └───────────────┘                           │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                DATABASE SUBNET (10.0.3.0/24)                     │ │
+│  │                                                                   │ │
+│  │  ┌───────────────┐                                              │ │
+│  │  │  Database     │                                              │ │
+│  │  │  (Private)    │                                              │ │
+│  │  └───────────────┘                                              │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  Internet Gateway: Connects VPC to internet                         │
+│  NAT Gateway: Private subnets can access internet (outbound)        │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**VPC Components**
+
+| Component | Purpose |
+|-----------|---------|
+| **Subnet** | Range of IP addresses in VPC |
+| **Internet Gateway** | Connect VPC to internet |
+| **NAT Gateway** | Private subnets → internet (outbound) |
+| **Route Table** | Directs traffic within VPC |
+| **Security Group** | Instance-level firewall |
+| **NACL** | Subnet-level firewall |
+
+---
+
+[Page 27]
+
+## Chapter 7: Load Balancer (ALB vs NLB)
+
+**What is Load Balancer?**
+
+Distributes incoming traffic across multiple targets (EC2, Lambda, IP addresses).
+
+**ALB (Application Load Balancer)**
+
+Layer 7 (HTTP/HTTPS) load balancer.
+
+**Best for:** Web applications, microservices, path-based routing.
+
+**NLB (Network Load Balancer)**
+
+Layer 4 (TCP/UDP) load balancer.
+
+**Best for:** High performance, low latency, TCP/UDP traffic.
+
+**Comparison**
+
+| Aspect | ALB | NLB |
+|--------|-----|-----|
+| **Layer** | Layer 7 (HTTP/HTTPS) | Layer 4 (TCP/UDP) |
+| **Routing** | Path-based, host-based, query string | IP-based, port-based |
+| **Latency** | Moderate | Very low |
+| **Static IP** | No (but can use Global Accelerator) | Yes |
+| **Use case** | Web apps, APIs, microservices | High-performance TCP/UDP |
+
+---
+
+[Page 28]
+
+# PART FIVE: DATABASE SERVICES
+
+## Chapter 8: RDS (Relational Database Service)
+
+**What is RDS?**
+
+Managed SQL databases (PostgreSQL, MySQL, MariaDB, Oracle, SQL Server).
+
+**Real Scenario:** Your e-commerce app needs a transactional database for orders and customers.
+
+**Without Cloud (Alternative):**
+- Set up database server
+- Manage backups
+- Handle failover
+- Patch OS and database
+- Monitor performance
+
+**With RDS:**
+- Launch in minutes
+- Automatic backups
+- Multi-AZ failover
+- Automated patching
+- Managed by AWS
+
+**Key Features**
+
+- **Multi-AZ:** Synchronous replication to standby for failover
+- **Read Replicas:** Asynchronous replication for read scaling
+- **Automated Backups:** Point-in-time recovery
+- **Performance Insights:** Database monitoring
+
+**When to Use RDS**
+
+- ACID transactions required
+- Complex queries with joins
+- Existing SQL applications
+- Structured data with fixed schema
+
+---
+
+[Page 29]
+
+## Chapter 9: DynamoDB
+
+**What is DynamoDB?**
+
+Managed NoSQL database with single-digit millisecond latency at any scale.
+
+**Real Scenario:** Your gaming app needs to store player scores with high write throughput.
+
+**Without Cloud (Alternative):**
+- Set up NoSQL cluster
+- Manage sharding
+- Handle replication
+- Monitor performance
+
+**With DynamoDB:**
+- Single-digit millisecond latency
+- Automatic scaling
+- Managed by AWS
+- Pay per request
+
+**Key Features**
+
+- **Single-digit millisecond latency** at any scale
+- **Automatic scaling** based on traffic
+- **Global Tables** for multi-region replication
+- **DynamoDB Streams** for change data capture
+
+**When to Use DynamoDB**
+
+- High throughput requirements
+- Predictable access patterns
+- Key-value or document data model
+- Event-driven architectures
+
+**RDS vs DynamoDB**
+
+| Aspect | RDS | DynamoDB |
+|--------|-----|----------|
+| **Type** | SQL (relational) | NoSQL (key-value/document) |
+| **Schema** | Fixed schema | Flexible schema |
+| **Scaling** | Vertical (upgrade instance) | Horizontal (automatic) |
+| **Complex queries** | Yes (JOINs, aggregations) | Limited |
+| **Latency** | Millisecond | Single-digit millisecond |
+| **Use case** | Transactions, complex queries | High scale, simple lookups |
+
+---
+
+[Page 30]
+
+# PART SIX: DEVOPS TOOLS
+
+## Chapter 10: CI/CD (CodePipeline, CodeBuild, CodeDeploy)
+
+**What is CodePipeline?**
+
+Fully managed continuous delivery service.
+
+**Diagram: AWS CI/CD Pipeline**
+
+```
+┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐
+│  GitHub  │──▶│ CodeBuild│──▶│CodeDeploy│──▶│   EC2/   │
+│  Source  │   │  Build   │   │  Deploy  │   │   ECS    │
+└──────────┘   └──────────┘   └──────────┘   └──────────┘
+                    │
+                    ▼
+              ┌──────────┐
+              │   S3     │
+              │ Artifacts│
+              └──────────┘
+```
+
+**AWS CI/CD Tools**
+
+| Tool | Purpose |
+|------|---------|
+| **CodeCommit** | Git repository (alternative to GitHub) |
+| **CodeBuild** | Build and test code |
+| **CodeDeploy** | Deploy to EC2, ECS, Lambda |
+| **CodePipeline** | Orchestrate entire pipeline |
+
+**Real Scenario**
+
+You want to automatically deploy code changes to production.
+
+**Without Cloud:**
+- Set up Jenkins server
+- Configure build agents
+- Manage plugins
+- Handle scaling
+
+**With AWS CI/CD:**
+- CodePipeline triggers on git push
+- CodeBuild runs tests
+- CodeDeploy deploys to EC2
+- Fully managed, no servers to manage
+
+---
+
+[Page 21]
+
+## Chapter 11: Container Services (ECS, EKS)
+
+**ECS (Elastic Container Service)**
+
+AWS's native container orchestration service.
+
+**EKS (Elastic Kubernetes Service)**
+
+Managed Kubernetes service on AWS.
+
+**Comparison**
+
+| Aspect | ECS | EKS |
+|--------|-----|-----|
+| **Type** | AWS native | Kubernetes |
+| **Complexity** | Simpler | More complex |
+| **Portability** | AWS only | Multi-cloud |
+| **Control plane** | Managed by AWS | Managed by AWS |
+| **Community** | Smaller | Large (open source) |
+| **Use case** | AWS-only workloads | Portability, Kubernetes expertise |
+
+**When to Use ECS**
+
+- AWS-only environment
+- Want simpler container orchestration
+- Need deep AWS integration
+
+**When to Use EKS**
+
+- Need Kubernetes portability
+- Multi-cloud strategy
+- Existing Kubernetes expertise
+- Open source tooling requirements
+
+---
+
+[Page 32]
+
+# PART SEVEN: MONITORING
+
+## Chapter 12: CloudWatch
+
+**What is CloudWatch?**
+
+Monitoring and observability service for AWS resources and applications.
+
+**Key Components**
+
+| Component | Purpose |
+|-----------|---------|
+| **Metrics** | Numerical data points (CPU, memory, request count) |
+| **Logs** | Store and monitor log files |
+| **Alarms** | Trigger notifications based on metric thresholds |
+| **Dashboards** | Visualize metrics |
+| **Events** | Respond to system events |
+
+**Real Scenario**
+
+You want to be alerted when CPU usage exceeds 80%.
+
+**Without Cloud:**
+- Set up monitoring server
+- Configure agents on each server
+- Manage alerting system
+
+**With CloudWatch:**
+- Automatic metrics for AWS services
+- Create alarm with threshold
+- SNS notification on trigger
+
+**CloudWatch vs Other Tools**
+
+| Tool | Use |
+|------|-----|
+| **CloudWatch** | AWS native monitoring |
+| **Prometheus** | Open source metrics |
+| **Datadog** | Third-party SaaS |
+
+---
+
+[Page 33]
+
+# PART EIGHT: SECURITY
+
+## Chapter 13: IAM (Identity and Access Management)
+
+**What is IAM?**
+
+Manage access to AWS services and resources.
+
+**Diagram: IAM Hierarchy**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                             IAM                                       │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         ROOT USER                                 │ │
+│  │                    (Full access to everything)                   │ │
+│  │                     → Use only for account setup                 │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    │ Create                          │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         IAM USERS                                 │ │
+│  │                    (Individual people)                           │ │
+│  │                    Example: alice, bob                           │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    │ Add to                          │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         IAM GROUPS                                │ │
+│  │                 (Collections of users)                           │ │
+│  │                 Example: developers, admins                      │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                    │                                 │
+│                                    │ Attach                          │
+│                                    ▼                                 │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         IAM POLICIES                              │ │
+│  │                    (JSON permissions document)                   │ │
+│  │                    Example: EC2ReadOnly, S3FullAccess           │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │                         IAM ROLES                                 │ │
+│  │              (Assumed by AWS services, not users)                │ │
+│  │           Example: EC2 role to access S3                        │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**IAM Best Practices**
+
+1. **No root user access** (except initial setup)
+2. **Use groups** to manage permissions
+3. **Least privilege** (give minimum permissions needed)
+4. **Use roles** for EC2, Lambda (never store credentials in code)
+5. **Enable MFA** for privileged users
+6. **Rotate access keys** regularly
+
+---
+
+[Page 34]
+
+# PART NINE: REAL SCENARIOS
+
+## Chapter 14: Deploying a Web App on AWS
+
+**Architecture Diagram**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    WEB APP DEPLOYMENT ON AWS                         │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌──────────┐                                                       │
+│  │  User    │                                                       │
+│  │  Browser │                                                       │
+│  └────┬─────┘                                                       │
+│       │                                                             │
+│       ▼                                                             │
+│  ┌──────────┐     ┌──────────┐     ┌──────────┐                   │
+│  │ Route53  │ ──▶ │ CloudFront│    │   S3     │                   │
+│  │  (DNS)   │     │  (CDN)   │    │ (Static  │                   │
+│  └──────────┘     └────┬─────┘    │  assets) │                   │
+│                        │          └──────────┘                   │
+│                        │                                           │
+│                        ▼                                           │
+│                  ┌──────────┐                                      │
+│                  │   ALB    │                                      │
+│                  │ (Load    │                                      │
+│                  │ Balancer)│                                      │
+│                  └────┬─────┘                                      │
+│                       │                                            │
+│          ┌────────────┼────────────┐                              │
+│          │            │            │                              │
+│          ▼            ▼            ▼                              │
+│     ┌────────┐   ┌────────┐   ┌────────┐                         │
+│     │ EC2    │   │ EC2    │   │ EC2    │                         │
+│     │ Web    │   │ Web    │   │ Web    │                         │
+│     └────┬───┘   └────┬───┘   └────┬───┘                         │
+│          │            │            │                              │
+│          └────────────┼────────────┘                              │
+│                       │                                            │
+│                       ▼                                            │
+│                  ┌──────────┐                                      │
+│                  │   RDS    │                                      │
+│                  │ (Database)│                                      │
+│                  └──────────┘                                      │
+│                                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐ │
+│  │  Deployment Pipeline:                                           │ │
+│  │  GitHub → CodeBuild → CodeDeploy → EC2                         │ │
+│  └─────────────────────────────────────────────────────────────────┘ │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Step-by-Step Deployment**
+
+1. **DNS:** Route53 points domain to CloudFront
+2. **CDN:** CloudFront caches static content, forwards dynamic requests to ALB
+3. **Load Balancer:** ALB distributes traffic to EC2 instances
+4. **Compute:** EC2 instances run web application
+5. **Database:** RDS stores application data
+6. **Storage:** S3 stores static assets (images, CSS, JS)
+
+---
+
+[Page 35]
+
+# PART TEN: TOOL COMPARISONS (IMPORTANT)
+
+## Chapter 15: EC2 vs Lambda vs ECS
+
+| Aspect | EC2 | Lambda | ECS |
+|--------|-----|--------|-----|
+| **What it is** | Virtual servers | Serverless functions | Containers |
+| **Control** | Full (OS, software) | None (just code) | Moderate |
+| **Scaling** | Manual or auto-scaling | Automatic | Manual or auto-scaling |
+| **Pricing** | Per hour | Per invocation | Per hour + resources |
+| **State** | Can be stateful | Stateless | Can be stateful |
+| **Max duration** | Unlimited | 15 minutes | Unlimited |
+| **Best for** | Long-running, custom apps | Event-driven, sporadic | Microservices, portability |
+| **Without Cloud** | Physical servers | Always-running server | Kubernetes clusters |
+| **When to use** | Need full control, lift-and-shift | Short functions, variable traffic | Containers, microservices |
+
+---
+
+## Chapter 16: S3 vs EBS vs EFS
+
+| Aspect | S3 | EBS | EFS |
+|--------|-----|-----|-----|
+| **Type** | Object | Block | File |
+| **Access** | API (HTTP) | Attached to EC2 | NFS (shared) |
+| **Shared** | Yes (via API) | No | Yes |
+| **Size** | Unlimited | Up to 16 TB | Unlimited |
+| **Performance** | Moderate | High IOPS | Moderate |
+| **Use case** | Static files, backups | Databases, boot | Shared files |
+| **Without Cloud** | File server | Hard drive | NAS (Network Attached Storage) |
+| **When to use** | Files, images, backups | Databases, high I/O | Shared content |
+
+---
+
+## Chapter 17: RDS vs DynamoDB
+
+| Aspect | RDS | DynamoDB |
+|--------|-----|----------|
+| **Type** | SQL (relational) | NoSQL (key-value/document) |
+| **Schema** | Fixed (tables, columns) | Flexible (schema-less) |
+| **Scaling** | Vertical (bigger instance) | Horizontal (automatic) |
+| **Complex queries** | Yes (JOINs, aggregations) | Limited |
+| **ACID transactions** | Yes | Limited (transactional APIs) |
+| **Latency** | Millisecond | Single-digit millisecond |
+| **Use case** | Complex queries, transactions | High scale, simple lookups |
+| **Without Cloud** | Traditional DB server | NoSQL cluster |
+| **When to use** | Structured data, SQL needed | High throughput, simple keys |
+
+---
+
+## Chapter 18: ALB vs NLB
+
+| Aspect | ALB | NLB |
+|--------|-----|-----|
+| **Layer** | Layer 7 (HTTP/HTTPS) | Layer 4 (TCP/UDP) |
+| **Routing** | Path-based, host-based | IP-based, port-based |
+| **Latency** | Moderate | Very low |
+| **Static IP** | No (via Global Accelerator) | Yes |
+| **Target types** | EC2, Lambda, IP | EC2, IP |
+| **Use case** | Web apps, APIs, microservices | High-performance TCP/UDP |
+| **Without Cloud** | HAProxy, Nginx | Hardware load balancer |
+| **When to use** | HTTP/HTTPS traffic, path routing | TCP/UDP, low latency, static IP |
+
+---
+
+[Page 36]
+
+# PART ELEVEN: INTERVIEW PREPARATION
+
+## Chapter 19: Common AWS Interview Questions
+
+**1. Q: What's the difference between EC2 and Lambda?**
+
+**A:** EC2 is a virtual server you manage (OS, patches, scaling). Lambda is serverless—you just upload code, and AWS runs it on demand. Use EC2 for long-running, stateful applications. Use Lambda for event-driven, short-running functions.
+
+**2. Q: How do you secure an S3 bucket?**
+
+**A:** 
+- Block public access by default
+- Use bucket policies for access control
+- Enable encryption (SSE-S3, SSE-KMS)
+- Use IAM roles for application access
+- Enable versioning to protect against deletions
+- Enable access logging
+
+**3. Q: Explain the difference between RDS and DynamoDB.**
+
+**A:** RDS is SQL-based (relational) with fixed schema, supports complex queries (JOINs), and scales vertically. DynamoDB is NoSQL (key-value/document) with flexible schema, scales horizontally automatically, and is best for high throughput with simple lookup patterns.
+
+**4. Q: What's a VPC and why use private subnets?**
+
+**A:** VPC is a logically isolated network in AWS. Private subnets have no direct internet access, so databases and application servers are protected from external access. Only load balancers and web servers go in public subnets.
+
+**5. Q: How does auto-scaling work?**
+
+**A:** Auto-scaling groups maintain desired number of EC2 instances based on policies (CPU > 70%, schedule, custom metrics). It launches new instances when needed and terminates unhealthy or idle ones.
+
+---
+
+## Chapter 20: System Design with AWS
+
+**Design a URL Shortener (bit.ly) on AWS**
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                    URL SHORTENER ON AWS                              │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  Write Path (Create short URL)                                      │
+│  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐        │
+│  │  Client  │──▶│ API Gateway│──▶│ Lambda   │──▶│ DynamoDB │        │
+│  │          │   │           │   │ Generate │   │ Store    │        │
+│  │          │   │           │   │ Short ID │   │ mapping  │        │
+│  └──────────┘   └──────────┘   └──────────┘   └──────────┘        │
+│                                                                       │
+│  Read Path (Redirect)                                                │
+│  ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐        │
+│  │  Client  │──▶│ CloudFront│──▶│ Lambda   │──▶│ DynamoDB │        │
+│  │          │   │  (CDN)   │   │ Lookup   │   │ Lookup   │        │
+│  └──────────┘   └──────────┘   └────┬─────┘   └──────────┘        │
+│                                     │                               │
+│                                     │ 307 Redirect                  │
+│                                     ▼                               │
+│                              ┌──────────────┐                       │
+│                              │  Client      │                       │
+│                              │  redirected  │                       │
+│                              └──────────────┘                       │
+│                                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**Key Design Decisions:**
+
+- **API Gateway + Lambda:** Serverless write path
+- **DynamoDB:** High throughput, simple key-value lookups
+- **CloudFront:** Cache redirects for popular URLs
+- **S3:** Store analytics data (clicks)
+
+---
+
+[Page 37]
+
+# BOTH BOOKS: FINAL CONCLUSION
+
+**Key Takeaways from Both Books**
+
+1. **Cloud is the foundation:** Understand IaaS, PaaS, SaaS, virtualization, containers.
+
+2. **AWS is the leader:** Know EC2, S3, Lambda, RDS, DynamoDB, VPC, IAM.
+
+3. **Design for failure:** Use load balancers, auto-scaling, multi-AZ.
+
+4. **Security is layered:** IAM, security groups, VPC, encryption.
+
+5. **Observability is essential:** CloudWatch, logs, metrics, alarms.
+
+6. **CI/CD is standard:** Automate build, test, deploy.
+
+7. **Know your trade-offs:** EC2 vs Lambda, RDS vs DynamoDB, ALB vs NLB.
+
+**Your Interview Preparation Checklist**
+
+- [ ] Understand cloud computing basics (IaaS, PaaS, SaaS)
+- [ ] Know EC2, S3, Lambda, RDS, DynamoDB
+- [ ] Understand VPC, subnets, security groups
+- [ ] Know CI/CD pipeline stages
+- [ ] Compare related services (EC2 vs Lambda, etc.)
+- [ ] Practice system design with AWS
+
+**Final Tips**
+
+1. **Draw diagrams:** Visualize architectures.
+
+2. **Compare services:** Show you understand trade-offs.
+
+3. **Start simple:** Build foundation before adding complexity.
+
+4. **Practice real scenarios:** Deploy actual applications.
+
+5. **Stay updated:** AWS adds new services frequently.
+
+Good luck with your interview!
+
+---
+
+**About This Book**
+
+This book is designed to take you from cloud basics to AWS expertise. Every concept includes examples, diagrams, and real-world scenarios. The goal is to prepare you for technical interviews and real-world cloud engineering.
+
+May your cloud journey be successful and your interviews outstanding.
+
+---
+
+[End of Both Books]

@@ -1,0 +1,88 @@
+/*
+================= PROBLEM SOLVING CHECKLIST =================
+
+1. UNDERSTAND THE PROBLEM
+- What is input?
+- What is output?
+- Constraints?
+- Can I explain problem in 1–2 lines?
+
+------------------------------------------------------------
+
+2. IDENTIFY PATTERN
+- Is it:
+  Greedy / Two Pointer / Sliding Window / Stack /
+  Prefix Sum / Binary Search / DP / Graph / Simulation ?
+- Which bucket does this belong to?
+
+------------------------------------------------------------
+
+3. BREAK INTO PHASES
+- Phase 1:
+- Phase 2:
+- Phase 3:
+- (Never solve everything together)
+
+------------------------------------------------------------
+
+4. DRY RUN (MANDATORY)
+- Take small example
+- Simulate step-by-step
+- If can't simulate → can't code
+
+------------------------------------------------------------
+
+5. EDGE CASES
+- Single element?
+- Empty input?
+- Exact boundary?
+- Max/min constraints?
+- Uneven distribution?
+
+------------------------------------------------------------
+
+6. CODING RULES
+- Use clear variable names
+- Don't mix multiple logics in one loop
+- Keep phases separate
+- Write simple, not clever code
+
+------------------------------------------------------------
+
+7. IF STUCK (20–30 MIN)
+- Re-check understanding
+- Try smaller example
+- Simplify problem
+- Check math / conditions
+- THEN take hint (not full solution)
+
+------------------------------------------------------------
+
+8. AFTER SEEING SOLUTION
+- Close solution
+- Re-implement from scratch
+- Explain logic in your own words
+
+------------------------------------------------------------
+
+9. TIME EXPECTATION
+- 10 min → understanding
+- 20 min → logic
+- 20–30 min → coding
+- 10 min → debugging
+
+------------------------------------------------------------
+
+10. MENTAL RULE
+- Don't panic
+- Think: "Break into phases"
+
+------------------------------------------------------------
+
+CORE PILLARS:
+✔ Structured Thinking → break into steps
+✔ Clear Breakdown → separate logic
+✔ Edge Cases → think failure cases
+✔ Correction → re-evaluate when stuck
+
+============================================================

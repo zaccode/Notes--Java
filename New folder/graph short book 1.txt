@@ -1,0 +1,1304 @@
+# 📖 **The Ultimate Graph Algorithms Handbook**
+## *Complete Reference for Interviews & Competitive Programming*
+
+---
+
+# 🎯 **PART 0: How To Use This Book**
+
+This handbook is designed as a **visual, pattern-based reference**. Each topic follows this structure:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  TOPIC NAME                                                │
+├─────────────────────────────────────────────────────────────┤
+│  📖 THEORY (1 page) - Core concept, why it matters         │
+│  🎨 VISUAL DIAGRAM - See how it works                      │
+│  🔧 TEMPLATE CODE - Copy-paste ready                       │
+│  📊 COMPLEXITY - Time & Space                              │
+│  🎯 WHEN TO USE - Problem signals                          │
+│  💼 INTERVIEW QUESTIONS - 10 practice problems             │
+│  🔄 ALTERNATIVES - Compare with other approaches           │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+# 📚 **PART 1: FUNDAMENTALS (The Foundation)**
+
+## **1. GRAPH REPRESENTATIONS**
+
+### 📖 **Theory**
+Graphs consist of **vertices (nodes)** connected by **edges**. The way you store a graph determines algorithm efficiency.
+
+| Representation | Space | Edge Lookup | Iterate Neighbors | Best For |
+|---------------|-------|-------------|-------------------|----------|
+| **Adjacency Matrix** | O(V²) | O(1) | O(V) | Dense graphs (E ≈ V²) |
+| **Adjacency List** | O(V+E) | O(degree) | O(degree) | Sparse graphs (E << V²) |
+| **Edge List** | O(E) | O(E) | O(E) | Kruskal's algorithm |
+
+### 🎨 **Visual Diagram**
+```
+ADJACENCY MATRIX          ADJACENCY LIST
+    0  1  2  3            0 → [1, 2]
+0  [0, 1, 1, 0]          1 → [0, 3]
+1  [1, 0, 0, 1]          2 → [0]
+2  [1, 0, 0, 0]          3 → [1]
+3  [0, 1, 0, 0]
+```
+
+### 🔧 **Template Code**
+```java
+// Adjacency List (MOST COMMON)
+List<List<Integer>> graph = new ArrayList<>();
+for (int i = 0; i < n; i++) graph.add(new ArrayList<>());
+graph.get(u).add(v);  // add edge u→v
+graph.get(v).add(u);  // for undirected
+
+// Adjacency Matrix
+boolean[][] matrix = new boolean[n][n];
+matrix[u][v] = true;
+
+// Edge List (for sorting edges)
+int[][] edges = new int[E][3];  // [u, v, weight]
+```
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Find if Path Exists in Graph](https://leetcode.com/problems/find-if-path-exists-in-graph/) | LeetCode | Easy |
+| 2 | [Number of Provinces](https://leetcode.com/problems/number-of-provinces/) | LeetCode | Medium |
+| 3 | [Find Center of Star Graph](https://leetcode.com/problems/find-center-of-star-graph/) | LeetCode | Easy |
+| 4 | [Print Adjacency List](https://www.geeksforgeeks.org/problems/print-adjacency-list-1587115620/1) | GFG | Easy |
+| 5 | [BFS of Graph](https://www.geeksforgeeks.org/problems/bfs-traversal-of-graph/1) | GFG | Easy |
+| 6 | [DFS of Graph](https://www.geeksforgeeks.org/problems/depth-first-traversal-for-a-graph/1) | GFG | Easy |
+| 7 | [Clone Graph](https://leetcode.com/problems/clone-graph/) | LeetCode | Medium |
+| 8 | [Find the Town Judge](https://leetcode.com/problems/find-the-town-judge/) | LeetCode | Easy |
+| 9 | [Count the Number of Complete Components](https://leetcode.com/problems/count-the-number-of-complete-components/) | LeetCode | Medium |
+| 10 | [Minimum Number of Vertices to Reach All Nodes](https://leetcode.com/problems/minimum-number-of-vertices-to-reach-all-nodes/) | LeetCode | Medium |
+
+---
+
+## **2. BFS (Breadth-First Search)**
+
+### 📖 **Theory**
+BFS explores graph **level by level** using a queue. It finds **shortest path** in **unweighted graphs** (all edges weight = 1). BFS guarantees the first time you reach a node, you've taken the minimum number of edges.
+
+**Key Insight**: BFS is to graphs what level-order traversal is to trees.
+
+### 🎨 **Visual Diagram**
+```
+Start: Node 0                           Queue: [0]
+   0                                    Visited: {0}
+  / \
+ 1   2                                 Level 0: 0
+ |   |
+ 3   4                                 Level 1: 1, 2
+                                       Level 2: 3, 4
+
+BFS Order: 0 → 1 → 2 → 3 → 4
+```
+
+### 🔧 **Template Code**
+```java
+// BFS for shortest path (unweighted)
+public int[] bfs(int n, List<List<Integer>> graph, int start) {
+    int[] dist = new int[n];
+    Arrays.fill(dist, -1);
+    Queue<Integer> queue = new LinkedList<>();
+    
+    dist[start] = 0;
+    queue.offer(start);
+    
+    while (!queue.isEmpty()) {
+        int u = queue.poll();
+        for (int v : graph.get(u)) {
+            if (dist[v] == -1) {  // not visited
+                dist[v] = dist[u] + 1;
+                queue.offer(v);
+            }
+        }
+    }
+    return dist;
+}
+```
+
+### 🎯 **When To Use BFS**
+- Shortest path in unweighted graph
+- Level-order traversal
+- Finding connected components
+- Word ladder problems
+- Rotting oranges (multi-source BFS)
+
+### 🔄 **BFS vs DFS Comparison**
+
+| Aspect | BFS | DFS |
+|--------|-----|-----|
+| **Data Structure** | Queue | Stack (or recursion) |
+| **Shortest Path** | Yes (unweighted) | No |
+| **Space** | O(width) | O(depth) |
+| **When to Use** | Shortest path, level order | Backtracking, topological sort, cycle detection |
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Number of Islands](https://leetcode.com/problems/number-of-islands/) | LeetCode | Medium |
+| 2 | [Shortest Path in Binary Matrix](https://leetcode.com/problems/shortest-path-in-binary-matrix/) | LeetCode | Medium |
+| 3 | [Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | LeetCode | Medium |
+| 4 | [Word Ladder](https://leetcode.com/problems/word-ladder/) | LeetCode | Hard |
+| 5 | [Open the Lock](https://leetcode.com/problems/open-the-lock/) | LeetCode | Medium |
+| 6 | [Minimum Genetic Mutation](https://leetcode.com/problems/minimum-genetic-mutation/) | LeetCode | Medium |
+| 7 | [Nearest Exit from Entrance in Maze](https://leetcode.com/problems/nearest-exit-from-entrance-in-maze/) | LeetCode | Medium |
+| 8 | [01 Matrix](https://leetcode.com/problems/01-matrix/) | LeetCode | Medium |
+| 9 | [BFS of graph](https://www.geeksforgeeks.org/problems/bfs-traversal-of-graph/1) | GFG | Easy |
+| 10 | [Snake and Ladder Problem](https://leetcode.com/problems/snake-and-ladders/) | LeetCode | Medium |
+
+---
+
+## **3. DFS (Depth-First Search)**
+
+### 📖 **Theory**
+DFS explores as far as possible along each branch before backtracking. Uses recursion (implicit stack) or explicit stack. Perfect for **path exploration**, **backtracking**, and **connectivity** problems.
+
+### 🎨 **Visual Diagram**
+```
+    0                               DFS Order (pre-order):
+   / \                              0 → 1 → 3 → 2 → 4
+  1   2
+  |   |
+  3   4
+
+Recursive visualization:
+dfs(0) → dfs(1) → dfs(3) → backtrack → dfs(2) → dfs(4)
+```
+
+### 🔧 **Template Code**
+```java
+// DFS - Recursive
+boolean[] visited = new boolean[n];
+
+public void dfs(int u, List<List<Integer>> graph) {
+    visited[u] = true;
+    for (int v : graph.get(u)) {
+        if (!visited[v]) {
+            dfs(v, graph);
+        }
+    }
+}
+
+// DFS with explicit stack (avoid recursion limit)
+public void dfsIterative(int start, List<List<Integer>> graph) {
+    Stack<Integer> stack = new Stack<>();
+    boolean[] visited = new boolean[n];
+    stack.push(start);
+    
+    while (!stack.isEmpty()) {
+        int u = stack.pop();
+        if (!visited[u]) {
+            visited[u] = true;
+            for (int v : graph.get(u)) {
+                if (!visited[v]) stack.push(v);
+            }
+        }
+    }
+}
+```
+
+### 🎯 **When To Use DFS**
+- Detecting cycles
+- Topological sorting
+- Finding connected components
+- Solving puzzles/mazes
+- Path existence checking
+- Backtracking problems
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Number of Islands](https://leetcode.com/problems/number-of-islands/) | LeetCode | Medium |
+| 2 | [Max Area of Island](https://leetcode.com/problems/max-area-of-island/) | LeetCode | Medium |
+| 3 | [Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | LeetCode | Medium |
+| 4 | [Course Schedule](https://leetcode.com/problems/course-schedule/) | LeetCode | Medium |
+| 5 | [All Paths From Source to Target](https://leetcode.com/problems/all-paths-from-source-to-target/) | LeetCode | Medium |
+| 6 | [Keys and Rooms](https://leetcode.com/problems/keys-and-rooms/) | LeetCode | Medium |
+| 7 | [DFS of Graph](https://www.geeksforgeeks.org/problems/depth-first-traversal-for-a-graph/1) | GFG | Easy |
+| 8 | [Find if Path Exists in Graph](https://leetcode.com/problems/find-if-path-exists-in-graph/) | LeetCode | Easy |
+| 9 | [Flood Fill](https://leetcode.com/problems/flood-fill/) | LeetCode | Easy |
+| 10 | [Surrounded Regions](https://leetcode.com/problems/surrounded-regions/) | LeetCode | Medium |
+
+---
+
+# 📚 **PART 2: CYCLE & ORDERING**
+
+## **4. CYCLE DETECTION**
+
+### 📖 **Theory**
+Detecting cycles is critical for **deadlock detection**, **dependency validation**, and ensuring algorithms like topological sort can run.
+
+**Undirected Graph**: A cycle exists if during DFS, you find an edge to an already visited node that is NOT the parent.
+
+**Directed Graph**: Use **3-state coloring** (0=unvisited, 1=visiting/in-stack, 2=processed). A back edge to a node in state 1 indicates a cycle.
+
+### 🎨 **Visual Diagram**
+```
+UNDIRECTED CYCLE               DIRECTED CYCLE
+    0                               0 → 1
+   / \                              ↑   ↓
+  1   2                             3 ← 2
+  |   |                             (0→1→2→3→0)
+  3   4
+Edge 1-3 creates cycle? NO (tree)
+Edge 2-4 creates cycle? NO (tree)
+Edge 1-2 creates cycle? YES (0-1-2-0)
+
+DETECTION: Back edge to visited non-parent = cycle
+```
+
+### 🔧 **Template Code**
+```java
+// Cycle Detection in Directed Graph (3-state coloring)
+public boolean hasCycle(int n, List<List<Integer>> graph) {
+    int[] state = new int[n];  // 0=unvisited, 1=visiting, 2=processed
+    
+    for (int i = 0; i < n; i++) {
+        if (state[i] == 0 && dfsCycle(i, graph, state)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+private boolean dfsCycle(int u, List<List<Integer>> graph, int[] state) {
+    state[u] = 1;  // currently in recursion stack
+    
+    for (int v : graph.get(u)) {
+        if (state[v] == 1) return true;  // back edge found
+        if (state[v] == 0 && dfsCycle(v, graph, state)) return true;
+    }
+    
+    state[u] = 2;  // fully processed
+    return false;
+}
+```
+
+### 🎯 **When To Use**
+- Course Schedule (prerequisites)
+- Deadlock detection
+- Validating DAG before topological sort
+- Finding redundant connections
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Course Schedule](https://leetcode.com/problems/course-schedule/) | LeetCode | Medium |
+| 2 | [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | LeetCode | Medium |
+| 3 | [Redundant Connection](https://leetcode.com/problems/redundant-connection/) | LeetCode | Medium |
+| 4 | [Redundant Connection II](https://leetcode.com/problems/redundant-connection-ii/) | LeetCode | Hard |
+| 5 | [Detect Cycle in Directed Graph](https://www.geeksforgeeks.org/problems/detect-cycle-in-a-directed-graph/1) | GFG | Medium |
+| 6 | [Detect Cycle in Undirected Graph](https://www.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1) | GFG | Medium |
+| 7 | [Find Eventual Safe States](https://leetcode.com/problems/find-eventual-safe-states/) | LeetCode | Medium |
+| 8 | [Cycle Detection](https://www.hackerearth.com/practice/algorithms/graphs/depth-first-search/practice-problems/algorithm/cycle-detection/) | GFG | Medium |
+| 9 | [Largest Color Value in Directed Graph](https://leetcode.com/problems/largest-color-value-in-a-directed-graph/) | LeetCode | Hard |
+| 10 | [Parallel Courses](https://leetcode.com/problems/parallel-courses/) | LeetCode | Medium |
+
+---
+
+## **5. TOPOLOGICAL SORT**
+
+### 📖 **Theory**
+Topological sort orders nodes in a **DAG** so that for every edge u→v, u comes before v. Used for **task scheduling**, **build systems**, and **dependency resolution**.
+
+**Two approaches:**
+- **Kahn's Algorithm (BFS)**: Remove nodes with in-degree 0
+- **DFS-based**: Post-order DFS + reverse
+
+### 🎨 **Visual Diagram**
+```
+DAG: 0 → 1 → 3     Kahn's Algorithm:
+     ↓   ↓         Step 1: In-degrees: 0:0, 1:1, 2:0, 3:2
+     2   → 4       Queue: [0, 2]
+                   Remove 0 → reduce in-degrees: 1:0, 2:1
+Order: 0, 2, 1, 3, 4
+```
+
+### 🔧 **Template Code**
+```java
+// Kahn's Algorithm (BFS)
+public int[] topologicalSort(int n, List<List<Integer>> graph) {
+    int[] inDegree = new int[n];
+    for (int u = 0; u < n; u++) {
+        for (int v : graph.get(u)) inDegree[v]++;
+    }
+    
+    Queue<Integer> queue = new LinkedList<>();
+    for (int i = 0; i < n; i++) {
+        if (inDegree[i] == 0) queue.offer(i);
+    }
+    
+    int[] result = new int[n];
+    int idx = 0;
+    while (!queue.isEmpty()) {
+        int u = queue.poll();
+        result[idx++] = u;
+        for (int v : graph.get(u)) {
+            if (--inDegree[v] == 0) queue.offer(v);
+        }
+    }
+    return idx == n ? result : new int[0];  // empty if cycle exists
+}
+```
+
+### 🎯 **When To Use**
+- Course schedule problems
+- Build order (compilation dependencies)
+- Alien dictionary (character ordering)
+- Task sequencing
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Course Schedule II](https://leetcode.com/problems/course-schedule-ii/) | LeetCode | Medium |
+| 2 | [Alien Dictionary](https://leetcode.com/problems/alien-dictionary/) | LeetCode | Hard (Premium) |
+| 3 | [Find the Order of Characters](https://www.geeksforgeeks.org/problems/alien-dictionary/1) | GFG | Hard |
+| 4 | [Topological Sort](https://www.geeksforgeeks.org/problems/topological-sort/1) | GFG | Medium |
+| 5 | [Minimum Height Trees](https://leetcode.com/problems/minimum-height-trees/) | LeetCode | Medium |
+| 6 | [Sequence Reconstruction](https://leetcode.com/problems/sequence-reconstruction/) | LeetCode | Medium |
+| 7 | [Parallel Courses II](https://leetcode.com/problems/parallel-courses-ii/) | LeetCode | Hard |
+| 8 | [Build a Matrix With Conditions](https://leetcode.com/problems/build-a-matrix-with-conditions/) | LeetCode | Hard |
+| 9 | [All Ancestors of a Node in DAG](https://leetcode.com/problems/all-ancestors-of-a-node-in-a-directed-acyclic-graph/) | LeetCode | Medium |
+| 10 | [Largest Number With Given Sum](https://www.geeksforgeeks.org/problems/largest-number-with-given-sum/0) | GFG | Medium |
+
+---
+
+# 📚 **PART 3: SHORTEST PATHS**
+
+## **6. DIJKSTRA'S ALGORITHM**
+
+### 📖 **Theory**
+Dijkstra finds **shortest paths** from source to all nodes in **weighted graphs with NON-NEGATIVE weights**. Uses a **priority queue** (min-heap) to always expand the node with smallest known distance.
+
+**Core principle**: Relaxation + greedy. Once a node is popped from PQ, its distance is final (Dijkstra's claim).
+
+### 🎨 **Visual Diagram**
+```
+Graph: 0 --4--> 1 --1--> 3
+       |         |
+       2         2
+       |         |
+       2 --3--> 3
+
+Dijkstra from 0:
+Step 1: PQ: (0,0) → pop 0, relax neighbors: dist[1]=4, dist[2]=2
+Step 2: PQ: (2,2), (4,1) → pop 2, relax: dist[3]=5
+Step 3: PQ: (4,1), (5,3) → pop 1, relax: dist[3]=min(5,4+2=6)=5
+Final distances: [0, 4, 2, 5]
+```
+
+### 🔧 **Template Code**
+```java
+public int[] dijkstra(int n, List<int[]>[] graph, int src) {
+    int[] dist = new int[n];
+    Arrays.fill(dist, Integer.MAX_VALUE);
+    dist[src] = 0;
+    
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[0] - b[0]);
+    pq.offer(new int[]{0, src});
+    
+    while (!pq.isEmpty()) {
+        int[] curr = pq.poll();
+        int d = curr[0], u = curr[1];
+        
+        if (d > dist[u]) continue;  // stale entry
+        
+        for (int[] edge : graph[u]) {
+            int v = edge[0], w = edge[1];
+            if (dist[u] + w < dist[v]) {
+                dist[v] = dist[u] + w;
+                pq.offer(new int[]{dist[v], v});
+            }
+        }
+    }
+    return dist;
+}
+```
+
+### ⚠️ **Important**: Dijkstra fails with **negative weights** (use Bellman-Ford)
+
+### 🎯 **When To Use**
+- GPS navigation (shortest route)
+- Network routing (OSPF)
+- Path with minimum effort
+- Any weighted graph with non-negative weights
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Network Delay Time](https://leetcode.com/problems/network-delay-time/) | LeetCode | Medium |
+| 2 | [Path with Minimum Effort](https://leetcode.com/problems/path-with-minimum-effort/) | LeetCode | Medium |
+| 3 | [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | LeetCode | Medium |
+| 4 | [Shortest Path Visiting All Nodes](https://leetcode.com/problems/shortest-path-visiting-all-nodes/) | LeetCode | Hard |
+| 5 | [Minimum Cost to Make at Least One Valid Path](https://leetcode.com/problems/minimum-cost-to-make-at-least-one-valid-path-in-a-grid/) | LeetCode | Hard |
+| 6 | [Dijkstra Algorithm](https://www.geeksforgeeks.org/problems/implementing-dijkstra-set-1-adjacency-matrix/1) | GFG | Medium |
+| 7 | [Minimum Number of Refueling Stops](https://leetcode.com/problems/minimum-number-of-refueling-stops/) | LeetCode | Hard |
+| 8 | [Reachable Nodes With Restrictions](https://leetcode.com/problems/reachable-nodes-with-restrictions/) | LeetCode | Medium |
+| 9 | [Swim in Rising Water](https://leetcode.com/problems/swim-in-rising-water/) | LeetCode | Hard |
+| 10 | [Minimum Obstacle Removal to Reach Corner](https://leetcode.com/problems/minimum-obstacle-removal-to-reach-corner/) | LeetCode | Hard |
+
+---
+
+## **7. BELLMAN-FORD ALGORITHM**
+
+### 📖 **Theory**
+Bellman-Ford finds shortest paths **even with NEGATIVE weights** and **detects negative cycles**. It relaxes all edges V-1 times (longest path without cycle has V-1 edges).
+
+**Key Insight**: After V-1 relaxations, if another relaxation improves distance → negative cycle exists.
+
+### 🎨 **Visual Diagram**
+```
+Graph with negative edge: 0 → 1 (4), 0 → 2 (3), 2 → 1 (-2)
+Iteration 1: dist[1] = min(∞, 0+4=4, 0+3-2=1) = 1
+Iteration 2: dist[1] = min(1, 0+3-2=1) = 1 (stable)
+
+Negative cycle: 0 → 1 (1), 1 → 2 (1), 2 → 0 (-3)
+Each iteration reduces distances infinitely → negative cycle detected
+```
+
+### 🔧 **Template Code**
+```java
+public int[] bellmanFord(int n, int[][] edges, int src) {
+    int[] dist = new int[n];
+    Arrays.fill(dist, Integer.MAX_VALUE);
+    dist[src] = 0;
+    
+    // Relax V-1 times
+    for (int i = 0; i < n - 1; i++) {
+        for (int[] edge : edges) {
+            int u = edge[0], v = edge[1], w = edge[2];
+            if (dist[u] != Integer.MAX_VALUE && dist[u] + w < dist[v]) {
+                dist[v] = dist[u] + w;
+            }
+        }
+    }
+    
+    // Check for negative cycles
+    for (int[] edge : edges) {
+        int u = edge[0], v = edge[1], w = edge[2];
+        if (dist[u] != Integer.MAX_VALUE && dist[u] + w < dist[v]) {
+            return null;  // negative cycle exists
+        }
+    }
+    return dist;
+}
+```
+
+### 🎯 **When To Use**
+- Graphs with negative weights
+- Detecting negative cycles
+- Currency arbitrage detection
+- "Cheapest flights with K stops" variation
+
+### 🔄 **Dijkstra vs Bellman-Ford vs Floyd-Warshall**
+
+| Algorithm | Time | Negative Weights | Negative Cycle | Best For |
+|-----------|------|------------------|----------------|----------|
+| Dijkstra | O((V+E)log V) | ❌ No | ❌ No | Single source, non-negative |
+| Bellman-Ford | O(V×E) | ✅ Yes | ✅ Detects | Single source, negative allowed |
+| Floyd-Warshall | O(V³) | ✅ Yes | ✅ Detects | All pairs shortest |
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/) | LeetCode | Medium |
+| 2 | [Network Delay Time](https://leetcode.com/problems/network-delay-time/) | LeetCode | Medium |
+| 3 | [Find the City With Smallest Neighbors](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | LeetCode | Medium |
+| 4 | [Negative Weight Cycle](https://www.geeksforgeeks.org/problems/negative-weight-cycle3504/1) | GFG | Medium |
+| 5 | [Minimum Cost to Reach Destination](https://www.geeksforgeeks.org/problems/minimum-cost-to-reach-destination/0) | GFG | Medium |
+| 6 | [Path With Maximum Probability](https://leetcode.com/problems/path-with-maximum-probability/) | LeetCode | Medium |
+| 7 | [Minimum Cost Walk in Weighted Graph](https://leetcode.com/problems/minimum-cost-walk-in-weighted-graph/) | LeetCode | Hard |
+| 8 | [Is There a Negative Cycle?](https://www.geeksforgeeks.org/problems/detect-negative-cycle-in-a-graph/0) | GFG | Medium |
+| 9 | [Arbitrage Detection](https://www.geeksforgeeks.org/detect-arbitrage-currency-exchange/) | GFG | Hard |
+| 10 | [Minimum Edges to Reverse to Make Path](https://www.geeksforgeeks.org/minimum-edges-reverse-make-path-source-destination/) | GFG | Hard |
+
+---
+
+## **8. FLOYD-WARSHALL ALGORITHM**
+
+### 📖 **Theory**
+Floyd-Warshall finds **shortest paths between ALL pairs** of nodes. Uses **dynamic programming**: `dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])` for each intermediate node k.
+
+**Core idea**: Consider each vertex as a potential "stopover" to improve paths.
+
+### 🎨 **Visual Diagram**
+```
+Initial:            After k=0:           After k=1:           After k=2:
+   0   1   2           0   1   2           0   1   2           0   1   2
+0  0   ∞   5         0  0   ∞   5         0  0   9   5         0  0   9   5
+1  ∞   0   2    →    1  ∞   0   2    →    1  ∞   0   2    →    1  ∞   0   2
+2  5   2   0         2  5   2   0         2  5   2   0         2  5   2   0
+
+k=0 (via node 0): 2→1 via 0? 5+∞ = no
+k=1 (via node 1): 0→2 via 1? ∞+2 = no
+k=2 (via node 2): 0→1 via 2? 5+2=7 (better than ∞)
+```
+
+### 🔧 **Template Code**
+```java
+public int[][] floydWarshall(int n, int[][] edges) {
+    int[][] dist = new int[n][n];
+    for (int i = 0; i < n; i++) {
+        Arrays.fill(dist[i], Integer.MAX_VALUE);
+        dist[i][i] = 0;
+    }
+    for (int[] e : edges) {
+        dist[e[0]][e[1]] = e[2];
+        dist[e[1]][e[0]] = e[2];  // undirected
+    }
+    
+    for (int k = 0; k < n; k++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (dist[i][k] != Integer.MAX_VALUE && 
+                    dist[k][j] != Integer.MAX_VALUE) {
+                    dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+                }
+            }
+        }
+    }
+    return dist;
+}
+```
+
+### 🎯 **When To Use**
+- Need distances between all pairs
+- Small graph (V ≤ 400)
+- Transitive closure (can I reach?)
+- Finding shortest paths in dense graphs
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Find the City With Smallest Neighbors](https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/) | LeetCode | Medium |
+| 2 | [Shortest Path to Get All Keys](https://leetcode.com/problems/shortest-path-to-get-all-keys/) | LeetCode | Hard |
+| 3 | [Evaluate Division](https://leetcode.com/problems/evaluate-division/) | LeetCode | Medium |
+| 4 | [Floyd Warshall](https://www.geeksforgeeks.org/problems/implementing-floyd-warshall2042/1) | GFG | Medium |
+| 5 | [Minimum Cost to Convert String I](https://leetcode.com/problems/minimum-cost-to-convert-string-i/) | LeetCode | Medium |
+| 6 | [Maximum Probability Path](https://www.geeksforgeeks.org/problems/maximum-probability-path/0) | GFG | Hard |
+| 7 | [Transitive Closure of a Graph](https://www.geeksforgeeks.org/transitive-closure-of-a-graph/) | GFG | Medium |
+| 8 | [Find the Shortest Path in a Matrix](https://www.geeksforgeeks.org/shortest-path-in-a-matrix/) | GFG | Medium |
+| 9 | [Minimum Cost to Reach Destination with K Stops](https://www.geeksforgeeks.org/minimum-cost-to-reach-destination-with-k-stops/) | GFG | Hard |
+| 10 | [City With Minimum Stations](https://leetcode.com/problems/minimum-number-of-stations/) | LeetCode | Hard |
+
+---
+
+# 📚 **PART 4: DISJOINT SET UNION (DSU)**
+
+## **9. UNION-FIND (DSU)**
+
+### 📖 **Theory**
+DSU efficiently manages **dynamic connectivity** - merging sets and checking if elements are connected. Two key optimizations:
+- **Path compression**: Flattens the tree during find
+- **Union by rank/size**: Attaches smaller tree under larger
+
+**Time Complexity**: Nearly O(1) per operation (inverse Ackermann function)
+
+### 🎨 **Visual Diagram**
+```
+Initial: 0   1   2   3   4
+Union(0,1): 0→1 (1 is parent)
+           2   3   4
+           1
+          /
+         0
+Union(2,3): 2→3
+Union(1,3): Find(1)=1, Find(3)=3, union by rank → 1→3
+           3
+          / \
+         1   2
+        /
+       0
+Find(0) with path compression: 0's parent becomes 3 directly
+```
+
+### 🔧 **Template Code**
+```java
+class DSU {
+    int[] parent;
+    int[] rank;
+    
+    public DSU(int n) {
+        parent = new int[n];
+        rank = new int[n];
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+    
+    public int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);  // path compression
+        }
+        return parent[x];
+    }
+    
+    public boolean union(int x, int y) {
+        int px = find(x), py = find(y);
+        if (px == py) return false;
+        
+        if (rank[px] < rank[py]) {
+            parent[px] = py;
+        } else if (rank[px] > rank[py]) {
+            parent[py] = px;
+        } else {
+            parent[py] = px;
+            rank[px]++;
+        }
+        return true;
+    }
+    
+    public boolean connected(int x, int y) {
+        return find(x) == find(y);
+    }
+}
+```
+
+### 🎯 **When To Use**
+- Dynamic connectivity queries
+- Kruskal's algorithm (MST)
+- Number of connected components
+- Redundant connection detection
+- Accounts merge problems
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Number of Provinces](https://leetcode.com/problems/number-of-provinces/) | LeetCode | Medium |
+| 2 | [Redundant Connection](https://leetcode.com/problems/redundant-connection/) | LeetCode | Medium |
+| 3 | [Accounts Merge](https://leetcode.com/problems/accounts-merge/) | LeetCode | Medium |
+| 4 | [Union-Find Implementation](https://www.geeksforgeeks.org/problems/union-find/1) | GFG | Easy |
+| 5 | [Most Stones Removed with Same Row/Col](https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/) | LeetCode | Medium |
+| 6 | [Sentence Similarity II](https://leetcode.com/problems/sentence-similarity-ii/) | LeetCode | Medium |
+| 7 | [Regions Cut By Slashes](https://leetcode.com/problems/regions-cut-by-slashes/) | LeetCode | Medium |
+| 8 | [Smallest String With Swaps](https://leetcode.com/problems/smallest-string-with-swaps/) | LeetCode | Medium |
+| 9 | [Detect Cycle in Undirected Graph](https://www.geeksforgeeks.org/problems/detect-cycle-in-an-undirected-graph/1) | GFG | Medium |
+| 10 | [Number of Operations to Make Network Connected](https://leetcode.com/problems/number-of-operations-to-make-network-connected/) | LeetCode | Medium |
+
+---
+
+# 📚 **PART 5: MINIMUM SPANNING TREE**
+
+## **10. KRUSKAL'S ALGORITHM**
+
+### 📖 **Theory**
+Kruskal builds MST by adding smallest edges that **don't create cycles**. Uses **Union-Find** to detect cycles. Sort edges by weight, iterate smallest to largest, add if endpoints are in different components.
+
+### 🎨 **Visual Diagram**
+```
+Edges sorted: (0-1:2), (2-3:3), (1-2:4), (0-3:5), (1-3:6)
+Step 1: Add 0-1 (2)     Components: {0,1}, {2}, {3}
+Step 2: Add 2-3 (3)     Components: {0,1}, {2,3}
+Step 3: Add 1-2 (4)     Different components? YES → add
+Result: MST weight = 2+3+4=9
+```
+
+### 🔧 **Template Code**
+```java
+public int kruskal(int n, int[][] edges) {  // edges: [u, v, weight]
+    Arrays.sort(edges, (a,b) -> a[2] - b[2]);
+    DSU dsu = new DSU(n);
+    int mstWeight = 0, edgesUsed = 0;
+    
+    for (int[] edge : edges) {
+        if (dsu.union(edge[0], edge[1])) {
+            mstWeight += edge[2];
+            edgesUsed++;
+            if (edgesUsed == n - 1) break;
+        }
+    }
+    return edgesUsed == n - 1 ? mstWeight : -1;  // -1 if disconnected
+}
+```
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Minimum Cost to Connect All Points](https://leetcode.com/problems/minimum-cost-to-connect-all-points/) | LeetCode | Medium |
+| 2 | [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/) | LeetCode | Medium |
+| 3 | [Kruskal's Algorithm](https://www.geeksforgeeks.org/problems/minimum-spanning-tree/1) | GFG | Medium |
+| 4 | [Min Cost to Connect All Nodes](https://leetcode.com/problems/min-cost-to-connect-all-nodes/) | LeetCode | Medium |
+| 5 | [Find Critical and Pseudo-Critical Edges](https://leetcode.com/problems/find-critical-and-pseudo-critical-edges-in-minimum-spanning-tree/) | LeetCode | Hard |
+| 6 | [Minimum Spanning Tree](https://www.geeksforgeeks.org/problems/minimum-spanning-tree/1) | GFG | Medium |
+| 7 | [Remove Max Number of Edges](https://leetcode.com/problems/remove-max-number-of-edges-to-keep-graph-fully-traversable/) | LeetCode | Hard |
+| 8 | [Build Well and Connect Houses](https://www.geeksforgeeks.org/minimum-cost-to-connect-houses/) | GFG | Hard |
+| 9 | [Minimum Cost to Repair Roads](https://www.geeksforgeeks.org/minimum-cost-to-repair-roads/) | GFG | Medium |
+| 10 | [Minimum Cost to Merge Stones](https://www.geeksforgeeks.org/minimum-cost-to-merge-stones/) | GFG | Hard |
+
+---
+
+## **11. PRIM'S ALGORITHM**
+
+### 📖 **Theory**
+Prim grows MST from a **starting node**, always adding the smallest edge connecting the tree to an outside node. Uses **priority queue** similar to Dijkstra but tracks edge weights to connect new nodes.
+
+### 🎨 **Visual Diagram**
+```
+Start at 0:
+    PQ: (2,1), (5,3)  → pick 0-1 (2), add 1
+    PQ: (4,2), (5,3)  → pick 1-2 (4), add 2
+    PQ: (3,3)         → pick 2-3 (3), add 3
+MST: 0-1(2), 1-2(4), 2-3(3) weight=9
+```
+
+### 🔧 **Template Code**
+```java
+public int prim(int n, List<int[]>[] graph) {
+    boolean[] inMST = new boolean[n];
+    PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> a[1] - b[1]);
+    pq.offer(new int[]{0, 0});  // {node, weight to connect}
+    
+    int mstWeight = 0, nodesInMST = 0;
+    
+    while (!pq.isEmpty() && nodesInMST < n) {
+        int[] curr = pq.poll();
+        int u = curr[0], w = curr[1];
+        
+        if (inMST[u]) continue;
+        
+        inMST[u] = true;
+        mstWeight += w;
+        nodesInMST++;
+        
+        for (int[] edge : graph[u]) {
+            int v = edge[0], weight = edge[1];
+            if (!inMST[v]) {
+                pq.offer(new int[]{v, weight});
+            }
+        }
+    }
+    return nodesInMST == n ? mstWeight : -1;
+}
+```
+
+### 🔄 **Kruskal vs Prim Comparison**
+
+| Aspect | Kruskal | Prim |
+|--------|---------|------|
+| **Approach** | Edge-based | Vertex-based |
+| **Data Structure** | Union-Find | Priority Queue |
+| **Best For** | Sparse graphs (E log V) | Dense graphs (V²) |
+| **Initialization** | Sort all edges | Start from one node |
+| **Cycle Detection** | Union-Find | Visited set |
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Minimum Cost to Connect All Points](https://leetcode.com/problems/minimum-cost-to-connect-all-points/) | LeetCode | Medium |
+| 2 | [Connecting Cities With Minimum Cost](https://leetcode.com/problems/connecting-cities-with-minimum-cost/) | LeetCode | Medium |
+| 3 | [Prim's Algorithm](https://www.geeksforgeeks.org/problems/minimum-spanning-tree/1) | GFG | Medium |
+| 4 | [Min Cost to Connect All Nodes](https://leetcode.com/problems/min-cost-to-connect-all-nodes/) | LeetCode | Medium |
+| 5 | [Optimize Water Distribution](https://leetcode.com/problems/optimize-water-distribution-in-a-village/) | LeetCode | Hard |
+| 6 | [Minimum Cost to Build Roads](https://www.geeksforgeeks.org/minimum-cost-to-build-roads/) | GFG | Hard |
+| 7 | [Number of Good Paths](https://leetcode.com/problems/number-of-good-paths/) | LeetCode | Hard |
+| 8 | [Minimum Spanning Tree with Restrictions](https://www.geeksforgeeks.org/minimum-spanning-tree-with-restrictions/) | GFG | Hard |
+| 9 | [Second Minimum Spanning Tree](https://www.geeksforgeeks.org/second-minimum-spanning-tree/) | GFG | Hard |
+| 10 | [Minimum Product Spanning Tree](https://www.geeksforgeeks.org/minimum-product-spanning-tree/) | GFG | Hard |
+
+---
+
+# 📚 **PART 6: STRONG CONNECTIVITY**
+
+## **12. KOSARAJU'S ALGORITHM (SCC)**
+
+### 📖 **Theory**
+Kosaraju finds **Strongly Connected Components** (SCCs) where every node can reach every other. Uses **two DFS passes**:
+1. DFS on original graph → push nodes to stack in finishing order
+2. DFS on **transposed graph** (reverse edges) using stack order
+
+Each DFS in step 2 gives one SCC.
+
+### 🎨 **Visual Diagram**
+```
+Original Graph:         Transposed Graph:
+0 → 1 → 3 ← 2          0 ← 1 ← 3 → 2
+↑         ↓            ↑         ↓
+4 ← 5                  4 → 5
+
+Step 1 DFS order (finishing times): push to stack
+Step 2: Pop from stack, DFS on transposed:
+Pop 3 → explore {3} alone? No → {3} is SCC
+Pop 1 → explore {1,0,4,5} → SCC {0,1,4,5}
+Pop 2 → explore {2} → SCC {2}
+```
+
+### 🔧 **Template Code**
+```java
+public List<List<Integer>> kosaraju(int n, List<List<Integer>> graph) {
+    // Step 1: DFS to get finishing order
+    boolean[] visited = new boolean[n];
+    Stack<Integer> stack = new Stack<>();
+    
+    for (int i = 0; i < n; i++) {
+        if (!visited[i]) dfs1(i, graph, visited, stack);
+    }
+    
+    // Step 2: Build transpose graph
+    List<List<Integer>> transpose = new ArrayList<>();
+    for (int i = 0; i < n; i++) transpose.add(new ArrayList<>());
+    for (int u = 0; u < n; u++) {
+        for (int v : graph.get(u)) transpose.get(v).add(u);
+    }
+    
+    // Step 3: Process in stack order
+    Arrays.fill(visited, false);
+    List<List<Integer>> sccs = new ArrayList<>();
+    
+    while (!stack.isEmpty()) {
+        int u = stack.pop();
+        if (!visited[u]) {
+            List<Integer> scc = new ArrayList<>();
+            dfs2(u, transpose, visited, scc);
+            sccs.add(scc);
+        }
+    }
+    return sccs;
+}
+```
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Kosaraju's Algorithm](https://www.geeksforgeeks.org/problems/strongly-connected-components-kosarajus-algorithm/1) | GFG | Hard |
+| 2 | [Find the Number of SCCs](https://www.geeksforgeeks.org/strongly-connected-components/) | GFG | Medium |
+| 3 | [Mother Vertex](https://www.geeksforgeeks.org/find-a-mother-vertex-in-a-graph/) | GFG | Medium |
+| 4 | [Critical Connections](https://leetcode.com/problems/critical-connections-in-a-network/) | LeetCode | Hard |
+| 5 | [Minimum Number of Days to Disconnect Island](https://leetcode.com/problems/minimum-number-of-days-to-disconnect-island/) | LeetCode | Hard |
+| 6 | [Strongly Connected Component](https://practice.geeksforgeeks.org/problems/strongly-connected-components-kosarajus-algorithm/1) | GFG | Hard |
+| 7 | [Maximum Number of Edges to Remove](https://www.geeksforgeeks.org/maximum-number-edges-remove-keep-graph-strongly-connected/) | GFG | Hard |
+| 8 | [Kill the Monster](https://www.geeksforgeeks.org/kill-monster/) | GFG | Hard |
+| 9 | [Minimum Edges to Reverse to Make Strongly Connected](https://www.geeksforgeeks.org/minimum-edges-to-reverse-to-make-strongly-connected/) | GFG | Hard |
+| 10 | [Largest SCC in a Graph](https://www.geeksforgeeks.org/largest-strongly-connected-component-in-a-graph/) | GFG | Medium |
+
+---
+
+# 📚 **PART 7: SPECIAL GRAPHS**
+
+## **13. BIPARTITE GRAPH (2-COLORABLE)**
+
+### 📖 **Theory**
+A graph is **bipartite** if vertices can be split into two sets with **no edges within a set**. Equivalent to: **no odd-length cycles**. Check using BFS/DFS with 2-coloring.
+
+### 🎨 **Visual Diagram**
+```
+BIPARTITE (Even cycle)      NOT BIPARTITE (Odd cycle)
+   0 --- 1                      0 --- 1
+   |     |                      |     |
+   |     |                      3 --- 2
+   3 --- 2                      
+Colors: 0=red, 1=blue,         Color conflict at edge 2-3
+2=red, 3=blue                  (both would be blue)
+```
+
+### 🔧 **Template Code**
+```java
+public boolean isBipartite(int n, List<List<Integer>> graph) {
+    int[] color = new int[n];  // -1=uncolored, 0=red, 1=blue
+    
+    for (int i = 0; i < n; i++) {
+        if (color[i] == -1) {
+            if (!bfsCheck(i, graph, color)) return false;
+        }
+    }
+    return true;
+}
+
+private boolean bfsCheck(int start, List<List<Integer>> graph, int[] color) {
+    Queue<Integer> queue = new LinkedList<>();
+    queue.offer(start);
+    color[start] = 0;
+    
+    while (!queue.isEmpty()) {
+        int u = queue.poll();
+        for (int v : graph.get(u)) {
+            if (color[v] == -1) {
+                color[v] = color[u] ^ 1;
+                queue.offer(v);
+            } else if (color[v] == color[u]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+```
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Is Graph Bipartite?](https://leetcode.com/problems/is-graph-bipartite/) | LeetCode | Medium |
+| 2 | [Possible Bipartition](https://leetcode.com/problems/possible-bipartition/) | LeetCode | Medium |
+| 3 | [Bipartite Graph](https://www.geeksforgeeks.org/problems/bipartite-graph/1) | GFG | Medium |
+| 4 | [Divide Nodes Into the Maximum Number of Groups](https://leetcode.com/problems/divide-nodes-into-the-maximum-number-of-groups/) | LeetCode | Hard |
+| 5 | [Check If Graph is Bipartite](https://practice.geeksforgeeks.org/problems/bipartite-graph/1) | GFG | Medium |
+| 6 | [Shortest Path to Get All Keys](https://leetcode.com/problems/shortest-path-to-get-all-keys/) | LeetCode | Hard |
+| 7 | [Maximum Matching in Bipartite Graph](https://www.geeksforgeeks.org/maximum-matching-in-bipartite-graph/) | GFG | Hard |
+| 8 | [Coloring a Border](https://leetcode.com/problems/coloring-a-border/) | LeetCode | Medium |
+| 9 | [Flower Planting With No Adjacent](https://leetcode.com/problems/flower-planting-with-no-adjacent/) | LeetCode | Medium |
+| 10 | [Minimum Number of Moves to Seat Everyone](https://www.geeksforgeeks.org/minimum-number-of-moves-to-seat-everyone/) | GFG | Easy |
+
+---
+
+## **14. EULERIAN PATH/CIRCUIT**
+
+### 📖 **Theory**
+**Eulerian Circuit**: Visits every edge exactly once, returns to start.
+**Eulerian Path**: Visits every edge exactly once, different start/end.
+
+**Conditions:**
+- **Undirected Graph**: 
+  - Circuit: All vertices have even degree
+  - Path: Exactly 0 or 2 vertices with odd degree
+- **Directed Graph**:
+  - Circuit: In-degree = out-degree for all vertices
+  - Path: At most one vertex with out-in=1, one with in-out=1, rest equal
+
+### 🎨 **Visual Diagram**
+```
+Eulerian Circuit (all edges once, return)
+1 --- 2          Path: 1-2-4-3-1 (all edges visited)
+|     |          1-2, 2-4, 4-3, 3-1
+|     |
+3 --- 4
+
+Degree: all = 2 (even) → Circuit exists
+```
+
+### 🔧 **Template Code**
+```java
+// Hierholzer's Algorithm for Eulerian Path
+public List<Integer> findEulerianPath(int n, List<List<Integer>> graph) {
+    LinkedList<Integer> path = new LinkedList<>();
+    
+    // Find start node (odd degree or first non-isolated)
+    int start = 0;
+    for (int i = 0; i < n; i++) {
+        if (graph.get(i).size() % 2 == 1) {
+            start = i;
+            break;
+        }
+    }
+    
+    // DFS with edge removal
+    Deque<Integer> stack = new ArrayDeque<>();
+    stack.push(start);
+    
+    while (!stack.isEmpty()) {
+        int u = stack.peek();
+        if (!graph.get(u).isEmpty()) {
+            int v = graph.get(u).remove(0);
+            graph.get(v).remove((Integer) u);  // remove reverse for undirected
+            stack.push(v);
+        } else {
+            path.addFirst(stack.pop());
+        }
+    }
+    return path;
+}
+```
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Reconstruct Itinerary](https://leetcode.com/problems/reconstruct-itinerary/) | LeetCode | Hard |
+| 2 | [Eulerian Path in Undirected Graph](https://www.geeksforgeeks.org/problems/eulerian-path-in-an-undirected-graph/1) | GFG | Medium |
+| 3 | [Cracking the Safe](https://leetcode.com/problems/cracking-the-safe/) | LeetCode | Hard |
+| 4 | [Euler Circuit in Directed Graph](https://www.geeksforgeeks.org/problems/euler-circuit-in-a-directed-graph/1) | GFG | Hard |
+| 5 | [Valid Arrangement of Pairs](https://leetcode.com/problems/valid-arrangement-of-pairs/) | LeetCode | Hard |
+| 6 | [Chinese Postman Problem](https://www.geeksforgeeks.org/chinese-postman-route-inspection/) | GFG | Hard |
+| 7 | [Fleury's Algorithm](https://www.geeksforgeeks.org/fleurys-algorithm-for-printing-eulerian-path/) | GFG | Medium |
+| 8 | [Minimum Time to Visit All Edges](https://www.geeksforgeeks.org/minimum-time-to-visit-all-edges-of-a-graph/) | GFG | Hard |
+| 9 | [Eulerian Path in a Grid](https://www.geeksforgeeks.org/eulerian-path-in-a-grid/) | GFG | Hard |
+| 10 | [De Bruijn Sequence](https://www.geeksforgeeks.org/de-bruijn-sequence/) | GFG | Hard |
+
+---
+
+# 📚 **PART 8: ADVANCED PATTERNS**
+
+## **15. MULTI-SOURCE BFS**
+
+### 📖 **Theory**
+Start BFS from **multiple sources simultaneously**. Each source "expands" outward. Perfect for problems like: distance to nearest 0, rotting oranges, infection spread.
+
+### 🎨 **Visual Diagram**
+```
+Grid: 0 1 1        Multi-source BFS:
+      1 1 0        Sources: (0,0) and (1,2)
+      0 1 1        
+                    Layer 1: neighbors of sources
+Layer 0: (0,0),(1,2) distance 0
+Layer 1: (0,1),(1,1),(2,2) distance 1
+Layer 2: (0,2),(2,1),(2,0) distance 2
+```
+
+### 🔧 **Template Code**
+```java
+public int[][] multiSourceBFS(int[][] grid) {
+    int m = grid.length, n = grid[0].length;
+    int[][] dist = new int[m][n];
+    Queue<int[]> queue = new LinkedList<>();
+    
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            if (grid[i][j] == 0) {
+                dist[i][j] = 0;
+                queue.offer(new int[]{i, j});
+            } else {
+                dist[i][j] = Integer.MAX_VALUE;
+            }
+        }
+    }
+    
+    int[][] dirs = {{0,1},{1,0},{0,-1},{-1,0}};
+    
+    while (!queue.isEmpty()) {
+        int[] cell = queue.poll();
+        for (int[] d : dirs) {
+            int ni = cell[0] + d[0], nj = cell[1] + d[1];
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n) {
+                if (dist[ni][nj] > dist[cell[0]][cell[1]] + 1) {
+                    dist[ni][nj] = dist[cell[0]][cell[1]] + 1;
+                    queue.offer(new int[]{ni, nj});
+                }
+            }
+        }
+    }
+    return dist;
+}
+```
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [01 Matrix](https://leetcode.com/problems/01-matrix/) | LeetCode | Medium |
+| 2 | [Rotting Oranges](https://leetcode.com/problems/rotting-oranges/) | LeetCode | Medium |
+| 3 | [Nearest Exit from Entrance in Maze](https://leetcode.com/problems/nearest-exit-from-entrance-in-maze/) | LeetCode | Medium |
+| 4 | [Minimum Knight Moves](https://leetcode.com/problems/minimum-knight-moves/) | LeetCode | Medium |
+| 5 | [Shortest Distance from All Buildings](https://leetcode.com/problems/shortest-distance-from-all-buildings/) | LeetCode | Hard |
+| 6 | [As Far from Land as Possible](https://leetcode.com/problems/as-far-from-land-as-possible/) | LeetCode | Medium |
+| 7 | [Multi-Source BFS](https://www.geeksforgeeks.org/multi-source-bfs-in-a-grid/) | GFG | Medium |
+| 8 | [Minimum Time to Visit All Apples](https://www.geeksforgeeks.org/minimum-time-to-visit-all-apples/) | GFG | Medium |
+| 9 | [Shortest Path in a Grid with Obstacles](https://www.geeksforgeeks.org/shortest-path-in-a-grid-with-obstacles/) | GFG | Medium |
+| 10 | [Minimum Moves to Reach Target with Rotations](https://leetcode.com/problems/minimum-moves-to-reach-target-with-rotations/) | LeetCode | Hard |
+
+---
+
+## **16. GRID AS GRAPH**
+
+### 📖 **Theory**
+In grid problems, each cell is a **node**, adjacent cells are **edges**. Movement can be 4-directional (up/down/left/right) or 8-directional (including diagonals). Common patterns: islands, paths, flood fill.
+
+### 🎨 **Visual Diagram**
+```
+Grid (4-directional):
+(0,0) — (0,1) — (0,2)
+  |       |       |
+(1,0) — (1,1) — (1,2)
+  |       |       |
+(2,0) — (2,1) — (2,2)
+
+Each cell connects to up to 4 neighbors.
+(1,1) connects to (0,1), (2,1), (1,0), (1,2)
+```
+
+### 🔧 **Template Code**
+```java
+// Grid BFS template
+int m = grid.length, n = grid[0].length;
+int[][] dirs = {{0,1},{1,0},{0,-1},{-1,0}};  // 4-directional
+
+for (int i = 0; i < m; i++) {
+    for (int j = 0; j < n; j++) {
+        // Process cell (i,j)
+        for (int[] d : dirs) {
+            int ni = i + d[0], nj = j + d[1];
+            if (ni >= 0 && ni < m && nj >= 0 && nj < n) {
+                // neighbor exists
+            }
+        }
+    }
+}
+```
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Number of Islands](https://leetcode.com/problems/number-of-islands/) | LeetCode | Medium |
+| 2 | [Max Area of Island](https://leetcode.com/problems/max-area-of-island/) | LeetCode | Medium |
+| 3 | [Flood Fill](https://leetcode.com/problems/flood-fill/) | LeetCode | Easy |
+| 4 | [Shortest Path in Binary Matrix](https://leetcode.com/problems/shortest-path-in-binary-matrix/) | LeetCode | Medium |
+| 5 | [Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/) | LeetCode | Medium |
+| 6 | [Surrounded Regions](https://leetcode.com/problems/surrounded-regions/) | LeetCode | Medium |
+| 7 | [Walls and Gates](https://leetcode.com/problems/walls-and-gates/) | LeetCode | Medium (Premium) |
+| 8 | [Island Perimeter](https://leetcode.com/problems/island-perimeter/) | LeetCode | Easy |
+| 9 | [Making A Large Island](https://leetcode.com/problems/making-a-large-island/) | LeetCode | Hard |
+| 10 | [Number of Enclaves](https://leetcode.com/problems/number-of-enclaves/) | LeetCode | Medium |
+
+---
+
+# 📚 **PART 9: FLOW NETWORKS**
+
+## **17. MAXIMUM FLOW (FORD-FULKERSON)**
+
+### 📖 **Theory**
+Maximum flow finds the maximum amount of flow from **source** to **sink** through a network with capacity constraints. **Ford-Fulkerson** repeatedly finds augmenting paths using DFS (Edmonds-Karp uses BFS for O(VE²) complexity).
+
+**Key concepts**: Residual graph, augmenting path, min-cut = max-flow.
+
+### 🎨 **Visual Diagram**
+```
+        (capacity)
+    Source → A (10)
+    Source → B (5)
+    A → B (15)
+    A → Sink (10)
+    B → Sink (10)
+
+Max Flow = 15
+Paths: S→A→T (10), S→B→T (5)
+```
+
+### 🔧 **Template Code**
+```java
+// Edmonds-Karp (BFS-based Ford-Fulkerson)
+public int maxFlow(int n, int[][] capacity, int source, int sink) {
+    int[][] residual = new int[n][n];
+    for (int i = 0; i < n; i++) {
+        System.arraycopy(capacity[i], 0, residual[i], 0, n);
+    }
+    
+    int maxFlow = 0;
+    int[] parent = new int[n];
+    
+    while (bfs(residual, source, sink, parent)) {
+        // Find bottleneck
+        int bottleneck = Integer.MAX_VALUE;
+        for (int v = sink; v != source; v = parent[v]) {
+            int u = parent[v];
+            bottleneck = Math.min(bottleneck, residual[u][v]);
+        }
+        
+        // Update residual network
+        for (int v = sink; v != source; v = parent[v]) {
+            int u = parent[v];
+            residual[u][v] -= bottleneck;
+            residual[v][u] += bottleneck;
+        }
+        maxFlow += bottleneck;
+    }
+    return maxFlow;
+}
+```
+
+### 💼 **10 Practice Problems**
+
+| # | Problem | Platform | Difficulty |
+|---|---------|----------|------------|
+| 1 | [Maximum Flow](https://www.geeksforgeeks/problems/maximum-flow/1) | GFG | Hard |
+| 2 | [Find if There is a Path of More Than k Length](https://www.geeksforgeeks.org/find-if-there-is-a-path-of-more-than-k-length-from-a-source/) | GFG | Hard |
+| 3 | [Minimum Cut Problem](https://www.geeksforgeeks.org/minimum-cut-in-a-directed-graph/) | GFG | Hard |
+| 4 | [Edmonds-Karp Algorithm](https://www.geeksforgeeks.org/edmonds-karp-algorithm-for-maximum-flow/) | GFG | Hard |
+| 5 | [Maximum Bipartite Matching](https://www.geeksforgeeks.org/maximum-bipartite-matching/) | GFG | Hard |
+| 6 | [Dinic's Algorithm](https://www.geeksforgeeks.org/dinics-algorithm-maximum-flow/) | GFG | Hard |
+| 7 | [Minimize the Maximum Flow](https://www.geeksforgeeks.org/minimize-the-maximum-flow-in-a-graph/) | GFG | Hard |
+| 8 | [Project Selection Problem](https://www.geeksforgeeks.org/project-selection-problem/) | GFG | Hard |
+| 9 | [Find Maximum Number of Edge Disjoint Paths](https://www.geeksforgeeks.org/find-maximum-number-of-edge-disjoint-paths/) | GFG | Hard |
+| 10 | [Maximum Flow with Lower Bounds](https://www.geeksforgeeks.org/maximum-flow-with-lower-bounds/) | GFG | Advanced |
+
+---
+
+# 🎯 **APPENDIX: QUICK REFERENCE CARDS**
+
+## **Pattern Recognition Cheat Sheet**
+
+| Problem Signal | Algorithm |
+|----------------|-----------|
+| "Shortest path" + unweighted | BFS |
+| "Shortest path" + weighted + non-negative | Dijkstra |
+| "Shortest path" + negative weights | Bellman-Ford |
+| "All pairs shortest" | Floyd-Warshall |
+| "Minimum spanning tree" | Kruskal / Prim |
+| "Connect all points with min cost" | MST |
+| "Course schedule / prerequisites" | Topological Sort |
+| "Detect cycle" | DFS with 3-state / Union-Find |
+| "Connected components" | DFS / BFS / Union-Find |
+| "Strongly connected" | Kosaraju / Tarjan |
+| "Bipartite / 2-coloring" | BFS / DFS |
+| "Visit every edge once" | Eulerian Path |
+| "Distance from multiple sources" | Multi-source BFS |
+| "Grid / matrix" | Treat as graph (4-directional) |
+| "Dynamic connectivity" | Union-Find |
+| "Max flow / min cut" | Ford-Fulkerson |
+
+## **Time Complexity Summary**
+
+```
+Algorithm          Time Complexity        Space
+DFS/BFS            O(V + E)              O(V)
+Dijkstra           O((V+E) log V)        O(V)
+Bellman-Ford       O(V × E)              O(V)
+Floyd-Warshall     O(V³)                 O(V²)
+Kruskal            O(E log E)            O(V)
+Prim               O((V+E) log V)        O(V)
+Kosaraju           O(V + E)              O(V)
+Topological Sort   O(V + E)              O(V)
+Union-Find         O(α(V)) ≈ O(1)        O(V)
+Ford-Fulkerson     O(E × max_flow)       O(V)
+```
+
+## **How Interviewers Ask Graph Questions**
+
+| Topic | Common Question Variations |
+|-------|---------------------------|
+| **Traversal** | "Count islands", "Find if path exists", "Clone graph" |
+| **Shortest Path** | "Network delay time", "Cheapest flights", "Minimum steps to reach end" |
+| **Cycle** | "Course schedule", "Redundant connection", "Deadlock detection" |
+| **Topological** | "Build order", "Alien dictionary", "Task scheduling" |
+| **MST** | "Connect all points", "Min cost to repair roads" |
+| **DSU** | "Number of provinces", "Accounts merge", "Friend circles" |
+| **Bipartite** | "Is graph bipartite?", "Possible bipartition" |
+
+---
+
+# 📚 **Recommended Resources (No Book Suggestions)**
+
+### **Platforms for Practice**
+- **LeetCode** - Graph problem sets, company-tagged questions
+- **GeeksforGeeks** - Algorithm explanations, code implementations
+- **Codeforces** - Competitive programming graph problems
+
+### **Visual Learning Tools**
+- **Graph Algorithm Visualizer** - Interactive tool to see BFS, DFS, Dijkstra, MST in action with custom graphs 
+- Draw your own graphs and watch algorithms execute step-by-step
+- Supports directed/undirected, weighted/unweighted edges
+
+### **How to Master Graph Algorithms**
+1. **Implement from scratch** - Don't copy-paste, write each algorithm yourself
+2. **Draw the graph** - Visualize before coding
+3. **Trace with examples** - Run through small test cases
+4. **Understand trade-offs** - Know when to use BFS vs DFS, Dijkstra vs Bellman-Ford
+5. **Practice pattern recognition** - Identify the problem type before coding
+
+---
+
+*"Graphs aren't harder than other topics — they just have more patterns. The key is pattern recognition, not memorization."* 
